@@ -1,0 +1,14 @@
+[
+    {
+        "fontCharset": "0123456789:. ",
+        "fontId": "HourFont"
+    },
+    {
+        "fontCharset": "0123456789:. ",
+        "fontId": "MinuteFont"
+    },
+    {
+        "fontCharset": "0123456789:. ",
+        "fontId": "StandardTimeFont"
+    }
+]
