@@ -40,7 +40,7 @@ test:
 	@echo "Running Unit Tests..."
 	@$(MONKEYC) $(TEST_FLAGS) -o test_build.prg
 	@echo "Loading tests into simulator..."
-	@$(MONKEYDO) test_build.prg $(DEVICE) -t | grep PASSED
+	@$(MONKEYDO) test_build.prg $(DEVICE) -t 2>&1 | tee /dev/tty | grep -i "PASSED"
 
 clean:
 	@rm -Rf $(OUTPUT) test_build* *.debug.xml bin/ deploy/ gen/ internal-mir/ external-mir/ export/ 
