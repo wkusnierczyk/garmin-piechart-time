@@ -20,7 +20,7 @@ class PiechartTimeLayout {
     static function getLayouts() as Array<PiechartTimeLayout> {
         return [
             new PiechartTimeConcentricLayout(),
-            new PiechartTimeLinearLayout(),
+            new PiechartTimeHorizontalLayout(),
             new PiechartTimeStackedLayout()
         ];
     }
@@ -66,7 +66,7 @@ class PiechartTimeConcentricLayout extends PiechartTimeLayout {
 }
 
 //! Layout: Horizontal Row (Linear)
-class PiechartTimeLinearLayout extends PiechartTimeLayout {
+class PiechartTimeHorizontalLayout extends PiechartTimeLayout {
 
     function initialize() {
         PiechartTimeLayout.initialize();
@@ -81,7 +81,7 @@ class PiechartTimeLinearLayout extends PiechartTimeLayout {
         var count = showSeconds ? 3 : 2;
         var itemSpace = screenWidth / count;
         // Padding calculation
-        var radius = (itemSpace / 2) - 5; 
+        var radius = (0.9 * (itemSpace / 2)).toNumber(); 
         var outlineThickness = 5;
 
         // Position 1: Hours

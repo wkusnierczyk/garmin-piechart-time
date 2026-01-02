@@ -117,24 +117,11 @@ class PiechartTime {
 
         // 3. Apply Layout (The "Where")
         var layout = _layoutPicker.getCurrentLayout();
-        layout.apply(_hourChart, _minutesChart, _secondsChart, dc);
+        layout.apply(_hourChart, _minutesChart, _secondsChart, _showSeconds);
 
         // 4. Apply color theme (The "How")
         var theme = _themePicker.getCurrentTheme();
-        _hourChart
-            .withSliceColor(theme.hourSlice)
-            .withOutlineColor(theme.hourOutline)
-            .withUnfilledColor(theme.hourUnfilled); 
-            
-        _minutesChart
-            .withSliceColor(theme.minutesSlice)
-            .withOutlineColor(theme.minutesOutline)
-            .withUnfilledColor(theme.minutesUnfilled);
-            
-        _secondsChart
-            .withSliceColor(theme.secondsSlice)
-            .withOutlineColor(theme.secondsOutline)
-            .withUnfilledColor(theme.secondsUnfilled);
+        theme.apply(_hourChart, _minutesChart, _secondsChart);
             
         // 4. Draw Enabled Charts (PAINTER'S ALGORITHM)
         // We draw from Back (Largest) to Front (Smallest)

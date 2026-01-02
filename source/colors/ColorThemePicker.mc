@@ -1,7 +1,9 @@
 using Toybox.Graphics;
-import Toybox.WatchUi;
+using Toybox.System;
+using Toybox.WatchUi;
+
 import Toybox.Lang;
-import Toybox.System;
+
 
 //! Manages the loading, storage, and selection of ColorThemes.
 //! Replaces the static ColorThemeLoader with a stateful picker.
@@ -65,19 +67,15 @@ class ColorThemePicker {
 
     // --- Public API ---
 
-    //! Return total number of loaded themes
-    function size() as Number {
-        return _themes.size();
-    }
-
     //! Returns the current index (useful for saving settings)
     function getCurrentIndex() as Number {
+        _updateCurrentIndex();
         return _currentIndex;
     }
 
     //! Returns the currently active ColorTheme
     function getCurrentTheme() as ColorTheme {
-        _currentIndex = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT) - 1;
+        _updateCurrentIndex();
         return _themes[_currentIndex];
     }
 
@@ -86,16 +84,6 @@ class ColorThemePicker {
         return _themeNames;
     }
 
-    //! Sets the current theme by index (e.g. from User Settings)
-    //! @param index [Number] The new index
-    //! @return [Boolean] true if index changed, false if invalid
-    function setIndex(index as Number) as ColorThemePicker {
-        if (index >= 0 && index < _themes.size()) {
-            _currentIndex = index;
-            return self;
-        }
-        return self;
-    }
 
     // --- Internal Logic ---
 
@@ -192,4 +180,9 @@ class ColorThemePicker {
         
         return number;
     }
+
+    private function _updateCurrentIndex() {
+        _currentIndex = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT) - 1;
+    }
+
 }
