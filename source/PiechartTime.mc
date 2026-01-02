@@ -13,20 +13,32 @@ class PiechartTime {
 
     // --- Constants ---
 
+    //! Enumeration of standard time presets for chart configuration.
+    enum PiechartType {
+        //! Preset for a standard 12-hour clock face.
+        PIECHART_12_HOURS,
+        //! Preset for a 24-hour daily progress cycle.
+        PIECHART_24_HOURS,
+        //! Preset for standard 0-60 minutes.
+        PIECHART_MINUTES,
+        //! Preset for standard 0-60 seconds.
+        PIECHART_SECONDS
+    }
+
     //! Constant for a 24-hour cycle denominator
-    const HOUR_TURN_24h = 24;
+    static const HOUR_TURN_24H = 24;
 
     //! Constant for a 12-hour cycle denominator
-    const HOUR_TURN_12H = 12;
+    static const HOUR_TURN_12H = 12;
 
     //! Default turn value (denominator), defaults to 12 hours.
     const DEFAULT_HOUR_TURN = HOUR_TURN_12H;
 
     //! Default minutes denominator (60).
-    const DEFAULT_MINUTES_TURN = 60;
+    static const MINUTES_TURN = 60;
 
     //! Default seconds denominator (60).
-    const DEFAULT_SECONDS_TURN = 60;
+    static const SECONDS_TURN = 60;
 
     //! The initial default turn (denominator) for a new instance.
     const DEFAULT_TURN = DEFAULT_HOUR_TURN;
@@ -88,6 +100,36 @@ class PiechartTime {
     }
 
     // --- Fluent Interface ---
+
+    //! Configures the chart's cycle (turn) based on a standard time preset.
+    //!
+    //! This helper method abstracts away the specific turn numbers for common 
+    //! time units, automatically setting the correct denominator.
+    //!
+    //! @param type [Number] A value from the TimeType enum (e.g., PiechartTime.PIECHART_MINUTES).
+    //! @return [PiechartTime] The current instance for chaining.
+    function asTime(time as Number) as PiechartTime {
+        switch (time) {
+            case PIECHART_12_HOURS:
+                _turn = HOUR_TURN_12H;
+                break;
+            case PIECHART_24_HOURS:
+                _turn = HOUR_TURN_24H;
+                break;
+            case PIECHART_MINUTES:
+                _turn = MINUTES_TURN;
+                break;
+            case PIECHART_SECONDS:
+                _turn = SECONDS_TURN;
+                break;
+            default:
+                // Safety fallback to prevent undefined behavior if an invalid integer is passed
+                System.println("PiechartTime: Unknown time type passed to asTime(), defaulting to 12H.");
+                _turn = HOUR_TURN_12H;
+                break;
+        }
+        return self;
+    }
 
     //! Sets the denominator for the chart.
     //! @param turn [Number] The full cycle value (e.g., 12, 24, or 60).
@@ -204,5 +246,5 @@ class PiechartTime {
         }
 
     }
-    
+
 }
