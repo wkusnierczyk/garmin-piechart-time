@@ -13,6 +13,7 @@
             <listEntry value="1">@Strings.LayoutConcentric</listEntry>
             <listEntry value="2">@Strings.LayoutHorizontal</listEntry>
             <listEntry value="3">@Strings.LayoutStacked</listEntry>
+            <listEntry value="4">@Strings.LayoutDiminishing</listEntry>
         </settingConfig>
     </setting>
 

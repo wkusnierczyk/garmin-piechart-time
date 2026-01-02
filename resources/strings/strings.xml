@@ -12,13 +12,15 @@
     <string id="LayoutConcentric">Concentric</string>
     <string id="LayoutHorizontal">Horizontal</string>
     <string id="LayoutStacked">Stacked</string>
+    <string id="LayoutDiminishing">Diminishing</string>
     <jsonData id="LayoutValues">[
         "Concentric",
         "Horizontal",
-        "Stacked"
+        "Stacked",
+        "Diminishing"
     ]</jsonData>
 
-    <string id="ThemeMenuTitile">Layout</string>
+    <string id="ThemeMenuTitile">Color Theme</string>
     <string id="ThemeMonochrome">Monochrome</string>
     <string id="ThemeFrench">French</string>
     <string id="ThemeItalian">Italian</string>

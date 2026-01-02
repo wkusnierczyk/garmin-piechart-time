@@ -101,12 +101,19 @@ class PiechartTime {
     function draw(dc) {
 
         // 1. Get Time
-        var clock = System.getClockTime();
-        
+        var clockTime = System.getClockTime();
+        var hour = clockTime.hour;
+        var minutes = clockTime.min;
+        var seconds = clockTime.sec;
+
+        // TODO: debuggin only
+        hour = 5;
+        minutes = 47;
+
         // 2. Update Data
-        _hourChart.withTurn(12).withValue(clock.hour % 12);
-        _minutesChart.withTurn(60).withValue(clock.min);
-        _secondsChart.withTurn(60).withValue(clock.sec);
+        _hourChart.withTurn(12).withValue(hour % 12);
+        _minutesChart.withTurn(60).withValue(minutes);
+        _secondsChart.withTurn(60).withValue(seconds);
 
         // 3. Determine Layout (Override > Picker)
         var layout = _layoutOverride;
