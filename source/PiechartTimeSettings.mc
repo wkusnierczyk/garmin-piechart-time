@@ -19,6 +19,15 @@ class PiechartTimeSettingsMenu extends WatchUi.Menu2 {
             null
         ));
 
+        var showSecondsEnabled = PropertyUtils.getPropertyElseDefault(SHOW_SECONDS_PROPERTY, SHOW_SECONDS_MODE_DEFAULT);
+        addItem(new WatchUi.ToggleMenuItem(
+            SHOW_SECONDS_LABEL, 
+            null, 
+            SHOW_SECONDS_PROPERTY, 
+            showSecondsEnabled, 
+            null
+        ));
+
         var multiOptionSelection = PropertyUtils.getPropertyElseDefault(MULTI_OPTION_PROPERTY, MULTI_OPTION_DEFAULT);
         var multiOptoinName = MULTI_OPTION_NAMES[multiOptionSelection];
         addItem(new WatchUi.MenuItem(

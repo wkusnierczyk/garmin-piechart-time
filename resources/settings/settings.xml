@@ -4,6 +4,10 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.ShowSeconds" title="@Strings.ShowSecondsMenuTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
     <setting propertyKey="@Properties.MultiOptionProperty" title="@Strings.MultiOptionMenuTitle">
         <settingConfig type="list">
             <listEntry value="1">@Strings.Option1</listEntry>

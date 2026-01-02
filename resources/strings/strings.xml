@@ -6,6 +6,8 @@
 
     <string id="StandardTimeMenuTitle">Show Standard Time</string>
 
+    <string id="ShowSecondsMenuTitle">Show Seconds</string>
+
     <string id="MultiOptionMenuTitle">MultiOption</string>
     <string id="Option1">Option 1</string>
     <string id="Option2">Option 2</string>

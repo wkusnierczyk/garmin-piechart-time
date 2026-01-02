@@ -72,6 +72,14 @@ class PiechartTime {
         return self;
     }
 
+    //! Enable or disable seconds display
+    //! @param showSeconds [Boolean]
+    //! @return [PiechartTime] self
+    function showSeconds(showSeconds as Boolean) as PiechartTime {
+        _showSeconds = showSeconds;
+        return self;
+    }
+
     //! Select the visual layout strategy
     //! @param layout [PiechartTime.Layout]
     //! @return [PiechartTime] self

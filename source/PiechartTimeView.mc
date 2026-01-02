@@ -35,10 +35,12 @@ class PiechartTimeView extends WatchUi.WatchFace {
         _drawStandardTime(null, hour, minutes, seconds);
         View.onUpdate(dc);
 
+        var showSeconds = PropertyUtils.getPropertyElseDefault(SHOW_SECONDS_PROPERTY, SHOW_SECONDS_MODE_DEFAULT);
+
         _piechartTime
             .withLayout(PiechartTime.LAYOUT_CONCENTRIC)
             .withLayout(PiechartTime.LAYOUT_HORIZONTAL)
-            .withSeconds()
+            .showSeconds(showSeconds)
             .withColorTheme(_availableThemes.getCurrentTheme())
             .draw(dc);
 

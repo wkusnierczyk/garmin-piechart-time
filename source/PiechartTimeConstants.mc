@@ -29,6 +29,10 @@ const STANDARD_TIME_LABEL = Application.loadResource(Rez.Strings.StandardTimeMen
 const STANDARD_TIME_PROPERTY = "ShowStandardTime";
 const STANDARD_TIME_MODE_DEFAULT = true;
 
+const SHOW_SECONDS_LABEL = Application.loadResource(Rez.Strings.ShowSecondsMenuTitle);
+const SHOW_SECONDS_PROPERTY = "ShowSeconds";
+const SHOW_SECONDS_MODE_DEFAULT = false;
+
 const MULTI_OPTION_LABEL = Application.loadResource(Rez.Strings.MultiOptionMenuTitle);
 const MULTI_OPTION_PROPERTY = "MultiOption";
 const MULTI_OPTION_DEFAULT = 1;
