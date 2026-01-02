@@ -1,0 +1,2 @@
+resources/fonts/Ubuntu-Regular-30.png filter=lfs diff=lfs merge=lfs -text
+resources/fonts/Ubuntu-Regular.ttf filter=lfs diff=lfs merge=lfs -text
