@@ -1,0 +1,56 @@
+{
+    "defaultTheme": "neon",
+    "themes": [
+        {
+            "colors": {
+                "hours": {
+                    "outline": "FFFFFF",
+                    "slice": "AAAAAA"
+                },
+                "minutes": {
+                    "outline": "FFFFFF",
+                    "slice": "AAAAAA"
+                },
+                "seconds": {
+                    "outline": "FFFFFF",
+                    "slice": "AAAAAA"
+                }
+            },
+            "name": "monochrome"
+        },
+        {
+            "colors": {
+                "hours": {
+                    "outline": "550055",
+                    "slice": "FF00FF"
+                },
+                "minutes": {
+                    "outline": "005500",
+                    "slice": "00FF00"
+                },
+                "seconds": {
+                    "outline": "005555",
+                    "slice": "00FFFF"
+                }
+            },
+            "name": "neon"
+        },
+        {
+            "colors": {
+                "hours": {
+                    "outline": "000055",
+                    "slice": "0000FF"
+                },
+                "minutes": {
+                    "outline": "000088",
+                    "slice": "0088FF"
+                },
+                "seconds": {
+                    "outline": "005555",
+                    "slice": "00FFFF"
+                }
+            },
+            "name": "ocean"
+        }
+    ]
+}
