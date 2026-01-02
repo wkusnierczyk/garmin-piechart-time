@@ -106,10 +106,6 @@ class PiechartTime {
         var minutes = clockTime.min;
         var seconds = clockTime.sec;
 
-        // TODO: debuggin only
-        hour = 5;
-        minutes = 47;
-
         // 2. Update Data
         _hourChart.withTurn(12).withValue(hour % 12);
         _minutesChart.withTurn(60).withValue(minutes);

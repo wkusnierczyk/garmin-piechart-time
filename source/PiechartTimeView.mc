@@ -29,10 +29,6 @@ class PiechartTimeView extends WatchUi.WatchFace {
         var minutes = clockTime.min;
         var seconds = clockTime.sec;
 
-        // TODO: debuggin only
-        hour = 5;
-        minutes = 47;
-
         _drawStandardTime(null, hour, minutes, seconds);
         View.onUpdate(dc);
 
