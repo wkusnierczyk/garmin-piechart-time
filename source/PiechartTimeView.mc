@@ -32,15 +32,21 @@ class PiechartTimeView extends WatchUi.WatchFace {
         _drawStandardTime(null, hour, minutes, seconds);
         View.onUpdate(dc);
 
-        var piechartColor = Graphics.COLOR_ORANGE;
-        var sliceColor = Graphics.COLOR_WHITE;
-        new Piechart()
-            .withTurn(Piechart.HOUR_TURN_12H)
-            .withValue(hour)
-            .withRadius(100)
-            .withOutlineThickness(3)
-            .withOutlineColor(piechartColor)
-            .withSliceColor(sliceColor)
+        // var piechartColor = Graphics.COLOR_ORANGE;
+        // var sliceColor = Graphics.COLOR_WHITE;
+        // new Piechart()
+        //     .withTurn(Piechart.HOUR_TURN_12H)
+        //     .withValue(hour)
+        //     .withRadius(100)
+        //     .withOutlineThickness(3)
+        //     .withOutlineColor(piechartColor)
+        //     .withSliceColor(sliceColor)
+        //     .draw(dc);
+
+        new PiechartTime()
+            .withLayout(PiechartTime.LAYOUT_HORIZONTAL)
+            .withSeconds()
+            .withColorTheme(Graphics.COLOR_WHITE, Graphics.COLOR_LT_GRAY, Graphics.COLOR_DK_GRAY)
             .draw(dc);
 
     }

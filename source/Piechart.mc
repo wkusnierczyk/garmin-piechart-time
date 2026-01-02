@@ -185,6 +185,15 @@ class Piechart {
         return self;
     }
 
+    //! Sets the outer ring and slice colors.
+    //! @param outlineColor [Graphics.ColorType] The color constant (e.g., Graphics.COLOR_RED).
+    //! @param sliceColor [Graphics.ColorType] The color constant (e.g., Graphics.COLOR_RED).
+    //! @return [Piechart] The current instance for chaining.
+    function withColors(outlineColor as Graphics.ColorType, sliceColor as Graphics.ColorType) as Piechart {
+        return withOutlineColor(outlineColor).withSliceColor(sliceColor);
+    }
+
+
     // --- Drawing Logic ---
 
     //! Draws the chart onto the provided Device Context (DC).
