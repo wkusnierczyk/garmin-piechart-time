@@ -1,19 +1,19 @@
 {
-    "defaultTheme": "neon",
+    "default": "monochrome",
     "themes": [
         {
             "colors": {
                 "hours": {
                     "outline": "FFFFFF",
-                    "slice": "AAAAAA"
+                    "slice": "FFFFFF"
                 },
                 "minutes": {
-                    "outline": "FFFFFF",
+                    "outline": "AAAAAA",
                     "slice": "AAAAAA"
                 },
                 "seconds": {
-                    "outline": "FFFFFF",
-                    "slice": "AAAAAA"
+                    "outline": "555555",
+                    "slice": "555555"
                 }
             },
             "name": "monochrome"

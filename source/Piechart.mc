@@ -161,19 +161,19 @@ class Piechart {
         return self;
     }
 
-    //! Sets the color of the outer ring.
-    //! @param color [Graphics.ColorType] The color constant (e.g., Graphics.COLOR_RED).
-    //! @return [Piechart] The current instance for chaining.
-    function withOutlineColor(color as Graphics.ColorType) as Piechart {
-        _outlineColor = color;
-        return self;
-    }
-
     //! Sets the thickness of the outer ring.
     //! @param thickness [Number] Thickness in pixels.
     //! @return [Piechart] The current instance for chaining.
     function withOutlineThickness(thickness as Number) as Piechart {
         _outlineThickness = thickness;
+        return self;
+    }
+
+    //! Sets the color of the outer ring.
+    //! @param color [Graphics.ColorType] The color constant (e.g., Graphics.COLOR_RED).
+    //! @return [Piechart] The current instance for chaining.
+    function withOutlineColor(color as Graphics.ColorType) as Piechart {
+        _outlineColor = color;
         return self;
     }
 
@@ -184,15 +184,6 @@ class Piechart {
         _sliceColor = color;
         return self;
     }
-
-    //! Sets the outer ring and slice colors.
-    //! @param outlineColor [Graphics.ColorType] The color constant (e.g., Graphics.COLOR_RED).
-    //! @param sliceColor [Graphics.ColorType] The color constant (e.g., Graphics.COLOR_RED).
-    //! @return [Piechart] The current instance for chaining.
-    function withColors(outlineColor as Graphics.ColorType, sliceColor as Graphics.ColorType) as Piechart {
-        return withOutlineColor(outlineColor).withSliceColor(sliceColor);
-    }
-
 
     // --- Drawing Logic ---
 

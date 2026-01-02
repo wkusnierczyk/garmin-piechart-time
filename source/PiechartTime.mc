@@ -17,13 +17,13 @@ class PiechartTime {
 
     const WITH_SECONDS_DEFAULT = false;
 
-    const DEFAULT_HOUR_OUTLINE_COLOR = Graphics.COLOR_RED;
-    const DEFAULT_MINUTE_OUTLINE_COLOR = Graphics.COLOR_GREEN;
-    const DEFAULT_SECOND_OUTLINE_COLOR = Graphics.COLOR_BLUE;
+    static const DEFAULT_HOUR_OUTLINE_COLOR = Graphics.COLOR_RED;
+    static const DEFAULT_MINUTES_OUTLINE_COLOR = Graphics.COLOR_GREEN;
+    static const DEFAULT_SECONDS_OUTLINE_COLOR = Graphics.COLOR_BLUE;
 
-    const DEAFULT_HOUR_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
-    const DEAFULT_MINUTE_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
-    const DEAFULT_SECOND_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
+    static const DEFAULT_HOUR_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
+    static const DEFAULT_MINUTES_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
+    static const DEFAULT_SECONDS_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
 
     // --- Configuration ---
     private var _showSeconds = WITH_SECONDS_DEFAULT;
@@ -31,15 +31,22 @@ class PiechartTime {
     private var _screenCenter as Array;
 
     // --- Child Components ---
-    private var _hoursChart;
+    private var _hourChart;
     private var _minutesChart;
     private var _secondsChart;
 
     function initialize() {
         // Create the children
-        _hoursChart   = new Piechart().withColors(DEFAULT_HOUR_OUTLINE_COLOR, DEAFULT_HOUR_SLICE_COLOR);
-        _minutesChart = new Piechart().withColors(DEFAULT_MINUTE_OUTLINE_COLOR, DEAFULT_MINUTE_SLICE_COLOR);
-        _secondsChart = new Piechart().withColors(DEFAULT_SECOND_OUTLINE_COLOR, DEAFULT_SECOND_SLICE_COLOR);
+        _hourChart = new Piechart()
+                            .withSliceColor(DEFAULT_HOUR_SLICE_COLOR)
+                            .withOutlineColor(DEFAULT_HOUR_OUTLINE_COLOR);
+        _minutesChart = new Piechart()
+                            .withSliceColor(DEFAULT_MINUTES_SLICE_COLOR)
+                            .withOutlineColor(DEFAULT_MINUTES_OUTLINE_COLOR);
+        _secondsChart = new Piechart()
+                            .withSliceColor(DEFAULT_SECONDS_SLICE_COLOR)
+                            .withOutlineColor(DEFAULT_SECONDS_OUTLINE_COLOR);
+        
         
         // Grab screen center once
         var settings = System.getDeviceSettings();
@@ -66,29 +73,53 @@ class PiechartTime {
         return self;
     }
 
-    //! Override default hour colors if desired
-    function withHourColors(outlineColor as Number, sliceColor as Number) as PiechartTime {
-        _hoursChart.withColors(outlineColor, sliceColor);
+    //! Override default hour slice color if desired
+    function withHourSliceColor(sliceColor as Number) as PiechartTime {
+        _hourChart.withSliceColor(sliceColor);
         return self;
     }
 
-    //! Override default minutes colors if desired
-    function withMinutesColors(outlineColor as Number, sliceColor as Number) as PiechartTime {
-        _minutesChart.withColors(outlineColor, sliceColor);
+    //! Override default hour outline color if desired
+    function withHourOutlineColor(outlineColor as Number) as PiechartTime {
+        _hourChart.withOutlineColor(outlineColor);
         return self;
     }
 
-    //! Override default seconds colors if desired
-    function withSecondsColors(outlineColor as Number, sliceColor as Number) as PiechartTime {
-        _secondsChart.withColors(outlineColor, sliceColor);
+    //! Override default minutes slice color if desired
+    function withMinutesSliceColor(sliceColor as Number) as PiechartTime {
+        _minutesChart.withSliceColor(sliceColor);
+        return self;
+    }
+
+    //! Override default minutes outline color if desired
+    function withMinutesOutlineColor(outlineColor as Number) as PiechartTime {
+        _minutesChart.withOutlineColor(outlineColor);
+        return self;
+    }
+
+    //! Override default seconds slice color if desired
+    function withSecondsSliceColor(sliceColor as Number) as PiechartTime {
+        _secondsChart.withSliceColor(sliceColor);
+        return self;
+    }
+
+    //! Override default seconds outline color if desired
+    function withSecondsOutlineColor(outlineColor as Number) as PiechartTime {
+        _secondsChart.withOutlineColor(outlineColor);
         return self;
     }
 
     //! Override default colors if desired
-    function withColorTheme(h as Number, m as Number, s as Number) as PiechartTime {
-        _hoursChart.withColors(h, Graphics.COLOR_DK_GRAY);
-        _minutesChart.withColors(m, Graphics.COLOR_DK_GRAY);
-        _secondsChart.withColors(s, Graphics.COLOR_DK_GRAY);
+    function withColorTheme(colorTheme as ColorTheme) as PiechartTime {
+        _hourChart
+            .withSliceColor(colorTheme.hourSlice)
+            .withOutlineColor(colorTheme.hourOutline);
+        _minutesChart
+            .withSliceColor(colorTheme.minutesSlice)
+            .withOutlineColor(colorTheme.minutesOutline);
+        _secondsChart
+            .withSliceColor(colorTheme.secondsSlice)
+            .withOutlineColor(colorTheme.secondsOutline);
         return self;
     }
 
@@ -99,7 +130,8 @@ class PiechartTime {
         var clock = System.getClockTime();
         
         // 2. Update Data (The "What")
-        _hoursChart.withTurn(12).withValue(clock.hour % 12); // Simple 12h clock
+        // TODO 12h or 24h based on a user setting
+        _hourChart.withTurn(12).withValue(clock.hour % 12); // Simple 12h clock
         _minutesChart.withTurn(60).withValue(clock.min);
         _secondsChart.withTurn(60).withValue(clock.sec);
 
@@ -111,7 +143,7 @@ class PiechartTime {
         }
 
         // 4. Draw Enabled Charts
-        _hoursChart.draw(dc);
+        _hourChart.draw(dc);
         _minutesChart.draw(dc);
         if (_showSeconds) {
             _secondsChart.draw(dc);
@@ -132,7 +164,7 @@ class PiechartTime {
         var gap = 2;
 
         // Outer Ring (Hours)
-        _hoursChart
+        _hourChart
             .withCenter(centerX, centerY)
             .withRadius(maxRadius)
             .withOutlineThickness(thickness);
@@ -161,7 +193,7 @@ class PiechartTime {
         var radius = (itemSpace / 2) - 5; // Padding
 
         // Position 1: Hours
-        _hoursChart
+        _hourChart
             .withCenter(itemSpace / 2, cy)
             .withRadius(radius)
             .withOutlineThickness(3); // Thinner line for small charts

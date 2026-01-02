@@ -7,15 +7,18 @@ import Toybox.Lang;
 
 class PiechartTimeView extends WatchUi.WatchFace {
 
+    private var _piechartTime as PiechartTime;
+
+    private var _availableThemes as ColorThemePicker;
+
     function initialize() {
         WatchFace.initialize();
+        _piechartTime = new PiechartTime();
+        _availableThemes = new ColorThemePicker();
     }
 
     function onLayout(dc) {
         setLayout(Rez.Layouts.WatchFace(dc));
-    }
-
-    function onShow() {
     }
 
     function onUpdate(dc) {
@@ -32,21 +35,11 @@ class PiechartTimeView extends WatchUi.WatchFace {
         _drawStandardTime(null, hour, minutes, seconds);
         View.onUpdate(dc);
 
-        // var piechartColor = Graphics.COLOR_ORANGE;
-        // var sliceColor = Graphics.COLOR_WHITE;
-        // new Piechart()
-        //     .withTurn(Piechart.HOUR_TURN_12H)
-        //     .withValue(hour)
-        //     .withRadius(100)
-        //     .withOutlineThickness(3)
-        //     .withOutlineColor(piechartColor)
-        //     .withSliceColor(sliceColor)
-        //     .draw(dc);
-
-        new PiechartTime()
+        _piechartTime
             .withLayout(PiechartTime.LAYOUT_HORIZONTAL)
+            .withLayout(PiechartTime.LAYOUT_CONCENTRIC)
             .withSeconds()
-            .withColorTheme(Graphics.COLOR_WHITE, Graphics.COLOR_LT_GRAY, Graphics.COLOR_DK_GRAY)
+            .withColorTheme(_availableThemes.getCurrentTheme())
             .draw(dc);
 
     }
