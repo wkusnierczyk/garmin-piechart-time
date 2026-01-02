@@ -34,8 +34,8 @@ class PiechartTimeView extends WatchUi.WatchFace {
 
         var piechartColor = Graphics.COLOR_ORANGE;
         var sliceColor = Graphics.COLOR_WHITE;
-        new PiechartTime()
-            .withTurn(PiechartTime.HOUR_TURN_12H)
+        new Piechart()
+            .withTurn(Piechart.HOUR_TURN_12H)
             .withValue(hour)
             .withRadius(100)
             .withOutlineThickness(3)

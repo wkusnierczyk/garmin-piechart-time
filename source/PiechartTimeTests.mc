@@ -37,10 +37,10 @@ class MockDc {
 
 (:test)
 function testFluentConfiguration(logger as Test.Logger) as Boolean {
-    var chart = new PiechartTime();
+    var chart = new Piechart();
 
     chart
-        .asTime(PiechartTime.PIECHART_MINUTES)
+        .asTime(Piechart.PIECHART_MINUTES)
         .withValue(15)
         .withRadius(50);
 
@@ -54,8 +54,8 @@ function testFluentConfiguration(logger as Test.Logger) as Boolean {
 
 (:test)
 function test24HourPreset(logger as Test.Logger) as Boolean {
-    var chart = new PiechartTime();
-    chart.asTime(PiechartTime.PIECHART_24_HOURS); 
+    var chart = new Piechart();
+    chart.asTime(Piechart.PIECHART_24_HOURS); 
     
     Test.assertEqual(24, chart.getTurn());
     return true;
@@ -63,12 +63,12 @@ function test24HourPreset(logger as Test.Logger) as Boolean {
 
 (:test)
 function testDrawingMath(logger as Test.Logger) as Boolean {
-    var chart = new PiechartTime();
+    var chart = new Piechart();
     var mockDc = new MockDc();
 
     // 15 minutes on a 60 minute dial (25%)
     // Expected: Start 90 (12 o'clock), End 0 (3 o'clock)
-    chart.asTime(PiechartTime.PIECHART_MINUTES)
+    chart.asTime(Piechart.PIECHART_MINUTES)
          .withValue(15);
          
     chart.draw(mockDc); 
@@ -86,11 +86,11 @@ function testDrawingMath(logger as Test.Logger) as Boolean {
 
 (:test)
 function testValueWrapping(logger as Test.Logger) as Boolean {
-    var chart = new PiechartTime();
+    var chart = new Piechart();
     var mockDc = new MockDc();
 
     // 75 minutes on a 60 minute dial -> should wrap to 15
-    chart.asTime(PiechartTime.PIECHART_MINUTES)
+    chart.asTime(Piechart.PIECHART_MINUTES)
          .withValue(75);
     
     chart.draw(mockDc);

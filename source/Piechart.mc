@@ -7,7 +7,7 @@ import Toybox.WatchUi;
 //! This class allows for the creation of "Donut" or "Pie" style charts
 //! where a slice fills up clockwise to represent progress.
 //! It supports method chaining (fluent interface) for configuration.
-class PiechartTime {
+class Piechart {
 
     // --- Constants ---
 
@@ -101,9 +101,9 @@ class PiechartTime {
     //! Configures the chart's cycle (turn) based on a standard time preset.
     //! This helper method abstracts away the specific turn numbers for common 
     //! time units, automatically setting the correct denominator.
-    //! @param type [Number] A value from the TimeType enum (e.g., PiechartTime.PIECHART_MINUTES).
-    //! @return [PiechartTime] The current instance for chaining.
-    function asTime(time as Number) as PiechartTime {
+    //! @param type [Number] A value from the TimeType enum (e.g., Piechart.PIECHART_MINUTES).
+    //! @return [Piechart] The current instance for chaining.
+    function asTime(time as Number) as Piechart {
         switch (time) {
             case PIECHART_12_HOURS:
                 _turn = HOUR_TURN_12H;
@@ -119,7 +119,7 @@ class PiechartTime {
                 break;
             default:
                 // Safety fallback to prevent undefined behavior if an invalid integer is passed
-                System.println("PiechartTime: Unknown time type passed to asTime(), defaulting to 12H.");
+                System.println("Piechart: Unknown time type passed to asTime(), defaulting to 12H.");
                 _turn = HOUR_TURN_12H;
                 break;
         }
@@ -128,8 +128,8 @@ class PiechartTime {
 
     //! Sets the denominator for the chart.
     //! @param turn [Number] The full cycle value (e.g., 12, 24, or 60).
-    //! @return [PiechartTime] The current instance for chaining.
-    function withTurn(turn as Number) as PiechartTime {
+    //! @return [Piechart] The current instance for chaining.
+    function withTurn(turn as Number) as Piechart {
         _turn = turn;
         return self;
     }
@@ -137,8 +137,8 @@ class PiechartTime {
     //! Sets the current value to display (numerator).
     //! The value is duck-typed (Number or Float).
     //! @param value [Number|Float] The time elapsed.
-    //! @return [PiechartTime] The current instance for chaining.
-    function withValue(value) as PiechartTime {
+    //! @return [Piechart] The current instance for chaining.
+    function withValue(value) as Piechart {
         _value = value;
         return self;
     }
@@ -146,8 +146,8 @@ class PiechartTime {
     //! Sets the absolute center position of the chart.
     //! @param centerX [Number] The X coordinate.
     //! @param centerY [Number] The Y coordinate.
-    //! @return [PiechartTime] The current instance for chaining.
-    function withCenter(centerX as Number, centerY as Number) as PiechartTime {
+    //! @return [Piechart] The current instance for chaining.
+    function withCenter(centerX as Number, centerY as Number) as Piechart {
         _centerX = centerX;
         _centerY = centerY;
         return self;
@@ -155,32 +155,32 @@ class PiechartTime {
 
     //! Sets the radius of the chart.
     //! @param radius [Number] The distance from center to the outer edge.
-    //! @return [PiechartTime] The current instance for chaining.
-    function withRadius(radius as Number) as PiechartTime {
+    //! @return [Piechart] The current instance for chaining.
+    function withRadius(radius as Number) as Piechart {
         _radius = radius;
         return self;
     }
 
     //! Sets the color of the outer ring.
     //! @param color [Graphics.ColorType] The color constant (e.g., Graphics.COLOR_RED).
-    //! @return [PiechartTime] The current instance for chaining.
-    function withOutlineColor(color as Graphics.ColorType) as PiechartTime {
+    //! @return [Piechart] The current instance for chaining.
+    function withOutlineColor(color as Graphics.ColorType) as Piechart {
         _outlineColor = color;
         return self;
     }
 
     //! Sets the thickness of the outer ring.
     //! @param thickness [Number] Thickness in pixels.
-    //! @return [PiechartTime] The current instance for chaining.
-    function withOutlineThickness(thickness as Number) as PiechartTime {
+    //! @return [Piechart] The current instance for chaining.
+    function withOutlineThickness(thickness as Number) as Piechart {
         _outlineThickness = thickness;
         return self;
     }
 
     //! Sets the color of the filled pie slice.
     //! @param color [Graphics.ColorType] The color constant.
-    //! @return [PiechartTime] The current instance for chaining.
-    function withSliceColor(color as Graphics.ColorType) as PiechartTime {
+    //! @return [Piechart] The current instance for chaining.
+    function withSliceColor(color as Graphics.ColorType) as Piechart {
         _sliceColor = color;
         return self;
     }
