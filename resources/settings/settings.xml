@@ -8,11 +8,21 @@
         <settingConfig type="boolean" />
     </setting>
 
-    <setting propertyKey="@Properties.MultiOptionProperty" title="@Strings.MultiOptionMenuTitle">
+    <setting propertyKey="@Properties.Layout" title="@Strings.LayoutMenuTitile">
         <settingConfig type="list">
-            <listEntry value="1">@Strings.Option1</listEntry>
-            <listEntry value="2">@Strings.Option2</listEntry>
-            <listEntry value="3">@Strings.Option3</listEntry>
+            <listEntry value="1">@Strings.LayoutConcentric</listEntry>
+            <listEntry value="2">@Strings.LayoutHorizontal</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.Theme" title="@Strings.ThemeMenuTitile">
+        <settingConfig type="list">
+            <listEntry value="1">@Strings.ThemeMonochrome</listEntry>
+            <listEntry value="2">@Strings.ThemeFrench</listEntry>
+            <listEntry value="3">@Strings.ThemeItalian</listEntry>
+            <listEntry value="4">@Strings.ThemeRed</listEntry>
+            <listEntry value="5">@Strings.ThemeOrange</listEntry>
+            <listEntry value="6">@Strings.ThemeOcean</listEntry>
         </settingConfig>
     </setting>
 

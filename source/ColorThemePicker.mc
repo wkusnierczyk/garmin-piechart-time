@@ -88,12 +88,12 @@ class ColorThemePicker {
     //! Sets the current theme by index (e.g. from User Settings)
     //! @param index [Number] The new index
     //! @return [Boolean] true if index changed, false if invalid
-    function setIndex(index as Number) as Boolean {
+    function setIndex(index as Number) as ColorThemePicker {
         if (index >= 0 && index < _themes.size()) {
             _currentIndex = index;
-            return true;
+            return self;
         }
-        return false;
+        return self;
     }
 
     // --- Internal Logic ---

@@ -17,7 +17,7 @@ class PiechartTime {
 
     const WITH_SECONDS_DEFAULT = false;
     
-    const CONCENTRIC_LAYOUT_EXPANSE = 0.8;
+    const CONCENTRIC_LAYOUT_EXPANSE = 0.6;
 
     // --- Default Color Constants ---
     static const DEFAULT_HOUR_OUTLINE_COLOR = Graphics.COLOR_RED;
@@ -155,25 +155,28 @@ class PiechartTime {
         
         var maxRadius = (CONCENTRIC_LAYOUT_EXPANSE * (centerX < centerY ? centerX : centerY)).toNumber();
         // Divide space roughly into rings
-        var thickness = maxRadius / 4; 
-        
+        var ringThickness = (maxRadius / 3.5).toNumber(); 
+
+        // TODO: make it proportional to radius
+        var outlineThickness = 5;
+
         // 1. Seconds (Largest / Back)
         _secondsChart
             .withCenter(centerX, centerY)
             .withRadius(maxRadius)
-            .withOutlineThickness(2);
+            .withOutlineThickness(outlineThickness);
 
         // 2. Minutes (Middle)
         _minutesChart
             .withCenter(centerX, centerY)
-            .withRadius(maxRadius - thickness)
-            .withOutlineThickness(2);
+            .withRadius(maxRadius - ringThickness)
+            .withOutlineThickness(outlineThickness);
 
         // 3. Hours (Smallest / Front)
         _hourChart
             .withCenter(centerX, centerY)
-            .withRadius(maxRadius - (thickness * 2))
-            .withOutlineThickness(2);
+            .withRadius(maxRadius - (ringThickness * 2))
+            .withOutlineThickness(outlineThickness);
     }
 
     //! Layout: Horizontal Row (Hours - Mins - Secs)
@@ -186,24 +189,27 @@ class PiechartTime {
         var itemSpace = screenW / count;
         var radius = (itemSpace / 2) - 5; // Padding
 
+        // TODO: make it proportional to radius
+        var outlineThickness = 4;
+
         // Position 1: Hours
         _hourChart
             .withCenter(itemSpace / 2, cy)
             .withRadius(radius)
-            .withOutlineThickness(3);
+            .withOutlineThickness(outlineThickness);
 
         // Position 2: Minutes
         _minutesChart
             .withCenter(itemSpace / 2 + itemSpace, cy)
             .withRadius(radius)
-            .withOutlineThickness(3);
+            .withOutlineThickness(outlineThickness);
 
         // Position 3: Seconds
         if (_showSeconds) {
             _secondsChart
                 .withCenter(itemSpace / 2 + (itemSpace * 2), cy)
                 .withRadius(radius)
-                .withOutlineThickness(3);
+                .withOutlineThickness(outlineThickness);
         }
     }
 }

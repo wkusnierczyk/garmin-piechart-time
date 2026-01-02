@@ -28,12 +28,21 @@ class PiechartTimeSettingsMenu extends WatchUi.Menu2 {
             null
         ));
 
-        var multiOptionSelection = PropertyUtils.getPropertyElseDefault(MULTI_OPTION_PROPERTY, MULTI_OPTION_DEFAULT);
-        var multiOptoinName = MULTI_OPTION_NAMES[multiOptionSelection];
+        var layoutSelection = PropertyUtils.getPropertyElseDefault(LAYOUT_PROPERTY, LAYOUT_DEFAULT);
+        var layoutName = LAYOUT_NAMES[layoutSelection];
         addItem(new WatchUi.MenuItem(
-            MULTI_OPTION_LABEL, 
-            multiOptoinName, 
-            MULTI_OPTION_PROPERTY, 
+            LAYOUT_LABEL,
+            layoutName,
+            LAYOUT_PROPERTY,
+            null
+        ));
+
+        var themeSelection = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT);
+        var themeName = THEME_NAMES[themeSelection];
+        addItem(new WatchUi.MenuItem(
+            THEME_LABEL,
+            themeName,
+            THEME_PROPERTY,
             null
         ));
 
@@ -56,11 +65,18 @@ class PiechartTimeSettingsDelegate extends WatchUi.Menu2InputDelegate {
             Properties.setValue(STANDARD_TIME_PROPERTY, item.isEnabled());
         }
 
-        if (id.equals(MULTI_OPTION_PROPERTY) && item instanceof WatchUi.MenuItem) {
-            var currentOption = PropertyUtils.getPropertyElseDefault(MULTI_OPTION_PROPERTY, MULTI_OPTION_DEFAULT);
-            var newOption = (currentOption % MULTI_OPTION_NAMES.size()) + 1;
-            Properties.setValue(MULTI_OPTION_PROPERTY, newOption);
-            item.setSubLabel(MULTI_OPTION_NAMES[newOption -1]);
+        if (id.equals(LAYOUT_PROPERTY) && item instanceof WatchUi.MenuItem) {
+            var currentLayout = PropertyUtils.getPropertyElseDefault(LAYOUT_PROPERTY, LAYOUT_DEFAULT);
+            var newLayout = ((currentLayout - 1) % LAYOUT_NAMES.size()) + 2;
+            Properties.setValue(LAYOUT_PROPERTY, newLayout);
+            item.setSubLabel(LAYOUT_NAMES[newLayout - 1]);
+        }
+
+        if (id.equals(THEME_PROPERTY) && item instanceof WatchUi.MenuItem) {
+            var currentTheme = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT);
+            var newTheme = ((currentTheme - 1) % THEME_NAMES.size()) + 2;
+            Properties.setValue(THEME_PROPERTY, newTheme);
+            item.setSubLabel(THEME_NAMES[newTheme - 1]);
         }
 
     }

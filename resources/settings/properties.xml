@@ -2,7 +2,7 @@
 
     <property id="ShowStandardTime" type="boolean">false</property>
     <property id="ShowSeconds" type="boolean">false</property>
+    <property id="Layout" type="number">1</property>
+    <property id="Theme" type="number">1</property>
 
-    <property id="MultiOptionProperty" type="number">0</property>
-    
 </properties>

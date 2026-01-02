@@ -8,15 +8,28 @@
 
     <string id="ShowSecondsMenuTitle">Show Seconds</string>
 
-    <string id="MultiOptionMenuTitle">MultiOption</string>
-    <string id="Option1">Option 1</string>
-    <string id="Option2">Option 2</string>
-    <string id="Option3">Option 3</string>
+    <string id="LayoutMenuTitile">Layout</string>
+    <string id="LayoutConcentric">Concentric</string>
+    <string id="LayoutHorizontal">Horizontal</string>
+    <jsonData id="LayoutValues">[
+        "Concentric",
+        "Horizontal"
+    ]</jsonData>
 
-    <jsonData id="MultiOptionValues">[
-        "Option 1",
-        "Option 2",
-        "Option 3"
+    <string id="ThemeMenuTitile">Layout</string>
+    <string id="ThemeMonochrome">Monochrome</string>
+    <string id="ThemeFrench">French</string>
+    <string id="ThemeItalian">Italian</string>
+    <string id="ThemeRed">Red</string>
+    <string id="ThemeOrange">Orange</string>
+    <string id="ThemeOcean">Ocean</string>
+    <jsonData id="ThemeValues">[
+        "Monochrome",
+        "French",
+        "Italian",
+        "Red",
+        "Orange",
+        "Ocean"
     ]</jsonData>
 
 </resources>

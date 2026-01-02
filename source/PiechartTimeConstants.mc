@@ -33,8 +33,12 @@ const SHOW_SECONDS_LABEL = Application.loadResource(Rez.Strings.ShowSecondsMenuT
 const SHOW_SECONDS_PROPERTY = "ShowSeconds";
 const SHOW_SECONDS_MODE_DEFAULT = false;
 
-const MULTI_OPTION_LABEL = Application.loadResource(Rez.Strings.MultiOptionMenuTitle);
-const MULTI_OPTION_PROPERTY = "MultiOption";
-const MULTI_OPTION_DEFAULT = 1;
+const LAYOUT_LABEL = Application.loadResource(Rez.Strings.LayoutMenuTitile);
+const LAYOUT_PROPERTY = "Layout";
+const LAYOUT_DEFAULT = 1;
+const LAYOUT_NAMES = Application.loadResource(Rez.JsonData.LayoutValues) as Array<String>;
 
-const MULTI_OPTION_NAMES = Application.loadResource(Rez.JsonData.MultiOptionValues) as Array<String>;
+const THEME_LABEL = Application.loadResource(Rez.Strings.ThemeMenuTitile);
+const THEME_PROPERTY = "Theme";
+const THEME_DEFAULT = 1;
+const THEME_NAMES = Application.loadResource(Rez.JsonData.ThemeValues) as Array<String>;

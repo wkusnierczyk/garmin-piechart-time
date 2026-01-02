@@ -52,7 +52,7 @@ class Piechart {
     const DEFAULT_RADIUS = 25;
 
     //! Default thickness of the outline ring in pixels.
-    const DEFAULT_OUTLINE_THICKNESS = 1;
+    const DEFAULT_OUTLINE_THICKNESS = 5;
 
     //! Default color for the outline ring.
     const DEFAULT_OUTLINE_COLOR = Graphics.COLOR_WHITE;
@@ -231,58 +231,7 @@ class Piechart {
     //! @param dc [Toybox.Graphics.Dc] The device context to draw on.
     function draw(dc) {
 
-        // Geometry Calculations
-
-        // Calculate the radius of the slice depending on whether it should cover the outline or not.
-
-        // var sliceRadius;
-        // if (_sliceOverOutline) {
-        //     sliceRadius = _radius + (_outlineThickness / 2.0);
-        // } else {
-        //     sliceRadius = _radius - (_outlineThickness / 2.0);
-        // }
-
-        // To draw a solid wedge/pie using drawArc:
-        // The pen width must equal the radius of the slice.
-        // The arc radius must be half of that width.
-        // We want the slice to fit *inside* the outline ring with a 1px gap (implied by thickness).
-
-        // var arcPenWidth = sliceRadius;
-        // var arcDrawingRadius = sliceRadius / 2;
-
-        // 1. Draw "Unfilled" Background (The Disc)
-        // We draw a full circle in the 'unfilled' color first. 
-        // This acts as the background for the chart, covering whatever is behind it (Painter's Algorithm).
-
-        // dc.setColor(_unfilledColor, Graphics.COLOR_TRANSPARENT);
-        // dc.setPenWidth(arcPenWidth);
-        // dc.drawCircle(_centerX, _centerY, arcDrawingRadius);
-
         _drawUnfilled(dc);
-
-        // 2. Draw the Pie Slice
-        // Handle wrapping (e.g., if value is 25 hours on a 24h clock, it becomes 1).
-
-        // _value = _value % _turn;
-        // var fraction = _value.toFloat() / _turn.toFloat();
-
-        // if (fraction > SLICE_TO_TURN_FRACTION_THRESHOLD) {
-        //     dc.setColor(_sliceColor, Graphics.COLOR_TRANSPARENT);
-        //     dc.setPenWidth(arcPenWidth);
-
-        //     var startAngle = 90; // 12 o'clock
-        //     var degreesToDraw = fraction * 360;
-        //     var endAngle = startAngle - degreesToDraw;
-
-        //     dc.drawArc(_centerX, _centerY, arcDrawingRadius, Graphics.ARC_CLOCKWISE, startAngle, endAngle);
-        // }
-        
-        // 3. Draw the Outline Ring (Last, so it sits on top)
-
-        // dc.setColor(_outlineColor, Graphics.COLOR_TRANSPARENT);
-        // dc.setPenWidth(_outlineThickness);
-        // // Draw along the center of the pen width
-        // dc.drawCircle(_centerX, _centerY, _radius - (_outlineThickness / 2.0));
 
         if (_sliceOverOutline) {
             _drawOutline(dc);
@@ -295,7 +244,7 @@ class Piechart {
     }
 
     private function _drawUnfilled(dc) {
-        var radius = _radius + (_outlineThickness / 2.0);
+        var radius = _radius - (_outlineThickness / 2.0);
         var arcDrawingRadius = radius / 2;
         dc.setColor(_unfilledColor, Graphics.COLOR_TRANSPARENT);
         dc.setPenWidth(radius);
@@ -304,7 +253,7 @@ class Piechart {
 
     private function _drawSlice(dc) {
 
-        var sliceRadius = _radius + (_outlineThickness / 2.0);
+        var sliceRadius = _radius - (_outlineThickness / 2.0);
         var arcPenWidth = sliceRadius;
         var arcDrawingRadius = sliceRadius / 2;
         var value = _value % _turn;
