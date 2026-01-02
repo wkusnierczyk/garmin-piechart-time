@@ -67,6 +67,10 @@ class ColorThemePicker {
 
     // --- Public API ---
 
+    function size() as Number {
+        return _themes.size();
+    }
+
     //! Returns the current index (useful for saving settings)
     function getCurrentIndex() as Number {
         _updateCurrentIndex();

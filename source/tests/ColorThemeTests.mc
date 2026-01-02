@@ -2,37 +2,9 @@ import Toybox.Test;
 import Toybox.Lang;
 import Toybox.Graphics;
 
-// -----------------------------------------------------------------------------
-// 1. Mock Objects
-// -----------------------------------------------------------------------------
-
-class MockPiechart extends Piechart {
-    public var lastSliceColor = null;
-    public var lastOutlineColor = null;
-    public var lastUnfilledColor = null;
-
-    function initialize() {
-        Piechart.initialize(); 
-    }
-
-    function withSliceColor(color) as Piechart {
-        lastSliceColor = color;
-        return self; 
-    }
-
-    function withOutlineColor(color) as Piechart {
-        lastOutlineColor = color;
-        return self;
-    }
-
-    function withUnfilledColor(color) as Piechart {
-        lastUnfilledColor = color;
-        return self;
-    }
-}
 
 // -----------------------------------------------------------------------------
-// 2. Unit Tests
+// Unit Tests
 // -----------------------------------------------------------------------------
 
 (:test)

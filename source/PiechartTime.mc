@@ -8,7 +8,6 @@ import Toybox.Time.Gregorian;
 class PiechartTime {
 
     const WITH_SECONDS_DEFAULT = false;
-    
     const CONCENTRIC_LAYOUT_EXPANSE = 0.6;
 
     // --- Default Color Constants ---
@@ -22,8 +21,13 @@ class PiechartTime {
 
     // --- Configuration ---
     private var _showSeconds = WITH_SECONDS_DEFAULT;
+    
+    // Pickers for loading from system properties
     private var _layoutPicker as PiechartTimeLayoutPicker;
     private var _themePicker as ColorThemePicker;
+    
+    // Optional override for testing or manual control
+    private var _layoutOverride as PiechartTimeLayout or Null;
 
     // --- Child Components ---
     private var _hourChart;
@@ -42,7 +46,7 @@ class PiechartTime {
         _secondsChart = new Piechart()
                             .withSliceColor(DEFAULT_SECONDS_SLICE_COLOR)
                             .withOutlineColor(DEFAULT_SECONDS_OUTLINE_COLOR);
-
+        
         _layoutPicker = new PiechartTimeLayoutPicker();
         _themePicker = new ColorThemePicker();
     }
@@ -50,92 +54,78 @@ class PiechartTime {
     // --- Fluent API ---
 
     //! Enable seconds display
-    //! @return [PiechartTime] self
     function withSeconds() as PiechartTime {
         _showSeconds = true;
         return self;
     }
 
     //! Disable seconds display
-    //! @return [PiechartTime] self
     function withoutSeconds() as PiechartTime {
         _showSeconds = false;
         return self;
     }
 
     //! Enable or disable seconds display
-    //! @param showSeconds [Boolean]
-    //! @return [PiechartTime] self
     function showSeconds(showSeconds as Boolean) as PiechartTime {
         _showSeconds = showSeconds;
         return self;
     }
 
-    // //! Select the visual layout strategy
-    // //! @param layout [PiechartTime.Layout]
-    // //! @return [PiechartTime] self
-    // function withLayout(layout as Layout) as PiechartTime {
-    //     _layout = layout;
-    //     return self;
-    // }
+    //! Select the visual layout strategy manually (overrides system setting)
+    //! @param layout [PiechartTimeLayout] The strategy instance
+    function withLayout(layout as PiechartTimeLayout) as PiechartTime {
+        _layoutOverride = layout;
+        return self;
+    }
 
     //! Apply a full color theme to all charts
-    //! @param colorTheme [ColorTheme] The theme data object
-    //! @return [PiechartTime] self
     function withColorTheme(colorTheme as ColorTheme) as PiechartTime {
         _hourChart
             .withSliceColor(colorTheme.hourSlice)
             .withOutlineColor(colorTheme.hourOutline)
-            .withUnfilledColor(colorTheme.hourUnfilled); 
-            
+            .withUnfilledColor(colorTheme.hourUnfilled);
         _minutesChart
             .withSliceColor(colorTheme.minutesSlice)
             .withOutlineColor(colorTheme.minutesOutline)
             .withUnfilledColor(colorTheme.minutesUnfilled);
-            
         _secondsChart
             .withSliceColor(colorTheme.secondsSlice)
             .withOutlineColor(colorTheme.secondsOutline)
             .withUnfilledColor(colorTheme.secondsUnfilled);
-            
         return self;
     }
 
     // --- Main Logic ---
 
     //! Updates state and draws components to the screen
-    //! @param dc [Graphics.Dc] Device Context
     function draw(dc) {
 
         // 1. Get Time
         var clock = System.getClockTime();
         
-        // 2. Update Data (The "What")
-        _hourChart.withTurn(12).withValue(clock.hour % 12); // Simple 12h clock
+        // 2. Update Data
+        _hourChart.withTurn(12).withValue(clock.hour % 12);
         _minutesChart.withTurn(60).withValue(clock.min);
         _secondsChart.withTurn(60).withValue(clock.sec);
 
-        // 3. Apply Layout (The "Where")
-        var layout = _layoutPicker.getCurrentLayout();
+        // 3. Determine Layout (Override > Picker)
+        var layout = _layoutOverride;
+        if (layout == null) {
+            layout = _layoutPicker.getCurrentLayout();
+        }
+        
+        // 4. Apply Layout
         layout.apply(_hourChart, _minutesChart, _secondsChart, _showSeconds);
 
-        // 4. Apply color theme (The "How")
+        // 5. Apply color theme
         var theme = _themePicker.getCurrentTheme();
         theme.apply(_hourChart, _minutesChart, _secondsChart);
             
-        // 4. Draw Enabled Charts (PAINTER'S ALGORITHM)
-        // We draw from Back (Largest) to Front (Smallest)
-        
-        // Layer 1 (Bottom): Seconds (Largest)
+        // 6. Draw (Painter's Algorithm: Largest/Back to Smallest/Front)
         if (_showSeconds) {
             _secondsChart.draw(dc);
         }
-        
-        // Layer 2 (Middle): Minutes
         _minutesChart.draw(dc);
-        
-        // Layer 3 (Top): Hours (Smallest)
         _hourChart.draw(dc);
     }
-
 }
