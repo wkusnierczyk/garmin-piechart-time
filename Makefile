@@ -11,7 +11,7 @@ DEV_KEY ?= ../garmin-keys/developer_key
 DEVICE ?= fenix7xpronowifi
 
 # Output filename
-OUTPUT := {blank:ucname}Time.prg
+OUTPUT := PiechartTime.prg
 # =================================================
 
 # Commands

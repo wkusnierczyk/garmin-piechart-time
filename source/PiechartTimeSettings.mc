@@ -4,7 +4,7 @@ using Toybox.WatchUi;
 import Toybox.Lang;
 
 
-class TimeSettingsMenu extends WatchUi.Menu2 {
+class PiechartTimeSettingsMenu extends WatchUi.Menu2 {
 
     function initialize() {
 
@@ -33,7 +33,7 @@ class TimeSettingsMenu extends WatchUi.Menu2 {
 }
 
 
-class TimeSettingsDelegate extends WatchUi.Menu2InputDelegate {
+class PiechartTimeSettingsDelegate extends WatchUi.Menu2InputDelegate {
 
     function initialize() {
         Menu2InputDelegate.initialize();

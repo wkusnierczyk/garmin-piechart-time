@@ -5,7 +5,7 @@ using Toybox.WatchUi;
 import Toybox.Lang;
 
 
-class TimeView extends WatchUi.WatchFace {
+class PiechartTimeView extends WatchUi.WatchFace {
 
     function initialize() {
         WatchFace.initialize();

@@ -34,7 +34,7 @@ function testTime(logger) as Boolean {
         var expectedMinutes = expected[TEST_INPUT_MINUTES] as String;
         var expectedSeconds = expected[TEST_INPUT_SECONDS] as String;
 
-        var actual = Time.formatTime(inputHour, inputMinutes, inputSeconds as Dictionary<Object, String>);
+        var actual = PiechartTime.formatTime(inputHour, inputMinutes, inputSeconds) as Dictionary<Object, String>;
         
         var actualHour = actual[:hour] as String;
         if (!actualHour.equals(expectedHour)) {
