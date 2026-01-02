@@ -9,12 +9,9 @@ class PiechartTimeView extends WatchUi.WatchFace {
 
     private var _piechartTime as PiechartTime;
 
-    private var _availableThemes as ColorThemePicker;
-
     function initialize() {
         WatchFace.initialize();
         _piechartTime = new PiechartTime();
-        _availableThemes = new ColorThemePicker();
     }
 
     function onLayout(dc) {
@@ -36,13 +33,9 @@ class PiechartTimeView extends WatchUi.WatchFace {
         View.onUpdate(dc);
 
         var showSeconds = PropertyUtils.getPropertyElseDefault(SHOW_SECONDS_PROPERTY, SHOW_SECONDS_MODE_DEFAULT);
-        var layout = PropertyUtils.getPropertyElseDefault(LAYOUT_PROPERTY, LAYOUT_DEFAULT) - 1;
-        var theme = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT) - 1;
 
         _piechartTime
-            .withLayout(layout)
             .showSeconds(showSeconds)
-            .withColorTheme(_availableThemes.setIndex(theme).getCurrentTheme())
             .draw(dc);
 
     }

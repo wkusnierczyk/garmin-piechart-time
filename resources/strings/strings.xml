@@ -11,9 +11,11 @@
     <string id="LayoutMenuTitile">Layout</string>
     <string id="LayoutConcentric">Concentric</string>
     <string id="LayoutHorizontal">Horizontal</string>
+    <string id="LayoutStacked">Stacked</string>
     <jsonData id="LayoutValues">[
         "Concentric",
-        "Horizontal"
+        "Horizontal",
+        "Stacked"
     ]</jsonData>
 
     <string id="ThemeMenuTitile">Layout</string>

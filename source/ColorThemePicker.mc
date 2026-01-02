@@ -77,6 +77,7 @@ class ColorThemePicker {
 
     //! Returns the currently active ColorTheme
     function getCurrentTheme() as ColorTheme {
+        _currentIndex = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT) - 1;
         return _themes[_currentIndex];
     }
 

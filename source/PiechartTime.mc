@@ -7,14 +7,6 @@ import Toybox.Time.Gregorian;
 //! A High-Level component that manages multiple Piecharts to display Time.
 class PiechartTime {
 
-    // --- Layout Enum ---
-    enum Layout {
-        //! Three concentric rings (Seconds outer/largest, Hours inner/smallest).
-        LAYOUT_CONCENTRIC,
-        //! Three small charts arranged horizontally.
-        LAYOUT_HORIZONTAL
-    }
-
     const WITH_SECONDS_DEFAULT = false;
     
     const CONCENTRIC_LAYOUT_EXPANSE = 0.6;
@@ -30,8 +22,8 @@ class PiechartTime {
 
     // --- Configuration ---
     private var _showSeconds = WITH_SECONDS_DEFAULT;
-    private var _layout = LAYOUT_CONCENTRIC;
-    private var _screenCenter as Array;
+    private var _layoutPicker as PiechartTimeLayoutPicker;
+    private var _themePicker as ColorThemePicker;
 
     // --- Child Components ---
     private var _hourChart;
@@ -51,9 +43,8 @@ class PiechartTime {
                             .withSliceColor(DEFAULT_SECONDS_SLICE_COLOR)
                             .withOutlineColor(DEFAULT_SECONDS_OUTLINE_COLOR);
 
-        // Grab screen center once
-        var settings = System.getDeviceSettings();
-        _screenCenter = [settings.screenWidth / 2, settings.screenHeight / 2] as Array;
+        _layoutPicker = new PiechartTimeLayoutPicker();
+        _themePicker = new ColorThemePicker();
     }
 
     // --- Fluent API ---
@@ -80,13 +71,13 @@ class PiechartTime {
         return self;
     }
 
-    //! Select the visual layout strategy
-    //! @param layout [PiechartTime.Layout]
-    //! @return [PiechartTime] self
-    function withLayout(layout as Layout) as PiechartTime {
-        _layout = layout;
-        return self;
-    }
+    // //! Select the visual layout strategy
+    // //! @param layout [PiechartTime.Layout]
+    // //! @return [PiechartTime] self
+    // function withLayout(layout as Layout) as PiechartTime {
+    //     _layout = layout;
+    //     return self;
+    // }
 
     //! Apply a full color theme to all charts
     //! @param colorTheme [ColorTheme] The theme data object
@@ -95,17 +86,17 @@ class PiechartTime {
         _hourChart
             .withSliceColor(colorTheme.hourSlice)
             .withOutlineColor(colorTheme.hourOutline)
-            .withUnfilledColor(colorTheme.hourUnfilled); // New
+            .withUnfilledColor(colorTheme.hourUnfilled); 
             
         _minutesChart
             .withSliceColor(colorTheme.minutesSlice)
             .withOutlineColor(colorTheme.minutesOutline)
-            .withUnfilledColor(colorTheme.minutesUnfilled); // New
+            .withUnfilledColor(colorTheme.minutesUnfilled);
             
         _secondsChart
             .withSliceColor(colorTheme.secondsSlice)
             .withOutlineColor(colorTheme.secondsOutline)
-            .withUnfilledColor(colorTheme.secondsUnfilled); // New
+            .withUnfilledColor(colorTheme.secondsUnfilled);
             
         return self;
     }
@@ -115,6 +106,7 @@ class PiechartTime {
     //! Updates state and draws components to the screen
     //! @param dc [Graphics.Dc] Device Context
     function draw(dc) {
+
         // 1. Get Time
         var clock = System.getClockTime();
         
@@ -124,12 +116,26 @@ class PiechartTime {
         _secondsChart.withTurn(60).withValue(clock.sec);
 
         // 3. Apply Layout (The "Where")
-        if (_layout == LAYOUT_CONCENTRIC) {
-            applyConcentricLayout(dc);
-        } else if (_layout == LAYOUT_HORIZONTAL) {
-            applyHorizontalLayout(dc);
-        }
+        var layout = _layoutPicker.getCurrentLayout();
+        layout.apply(_hourChart, _minutesChart, _secondsChart, dc);
 
+        // 4. Apply color theme (The "How")
+        var theme = _themePicker.getCurrentTheme();
+        _hourChart
+            .withSliceColor(theme.hourSlice)
+            .withOutlineColor(theme.hourOutline)
+            .withUnfilledColor(theme.hourUnfilled); 
+            
+        _minutesChart
+            .withSliceColor(theme.minutesSlice)
+            .withOutlineColor(theme.minutesOutline)
+            .withUnfilledColor(theme.minutesUnfilled);
+            
+        _secondsChart
+            .withSliceColor(theme.secondsSlice)
+            .withOutlineColor(theme.secondsOutline)
+            .withUnfilledColor(theme.secondsUnfilled);
+            
         // 4. Draw Enabled Charts (PAINTER'S ALGORITHM)
         // We draw from Back (Largest) to Front (Smallest)
         
@@ -145,71 +151,4 @@ class PiechartTime {
         _hourChart.draw(dc);
     }
 
-    // --- Layout Strategies ---
-
-    //! Layout: Stacked Concentric Discs
-    //! Seconds = Largest (Back), Hours = Smallest (Front)
-    private function applyConcentricLayout(dc) {
-        var centerX = _screenCenter[0];
-        var centerY = _screenCenter[1];
-        
-        var maxRadius = (CONCENTRIC_LAYOUT_EXPANSE * (centerX < centerY ? centerX : centerY)).toNumber();
-        // Divide space roughly into rings
-        var ringThickness = (maxRadius / 3.5).toNumber(); 
-
-        // TODO: make it proportional to radius
-        var outlineThickness = 5;
-
-        // 1. Seconds (Largest / Back)
-        _secondsChart
-            .withCenter(centerX, centerY)
-            .withRadius(maxRadius)
-            .withOutlineThickness(outlineThickness);
-
-        // 2. Minutes (Middle)
-        _minutesChart
-            .withCenter(centerX, centerY)
-            .withRadius(maxRadius - ringThickness)
-            .withOutlineThickness(outlineThickness);
-
-        // 3. Hours (Smallest / Front)
-        _hourChart
-            .withCenter(centerX, centerY)
-            .withRadius(maxRadius - (ringThickness * 2))
-            .withOutlineThickness(outlineThickness);
-    }
-
-    //! Layout: Horizontal Row (Hours - Mins - Secs)
-    private function applyHorizontalLayout(dc) {
-        var cy = _screenCenter[1];
-        var screenW = _screenCenter[0] * 2;
-        
-        // Calculate item width
-        var count = _showSeconds ? 3 : 2;
-        var itemSpace = screenW / count;
-        var radius = (itemSpace / 2) - 5; // Padding
-
-        // TODO: make it proportional to radius
-        var outlineThickness = 4;
-
-        // Position 1: Hours
-        _hourChart
-            .withCenter(itemSpace / 2, cy)
-            .withRadius(radius)
-            .withOutlineThickness(outlineThickness);
-
-        // Position 2: Minutes
-        _minutesChart
-            .withCenter(itemSpace / 2 + itemSpace, cy)
-            .withRadius(radius)
-            .withOutlineThickness(outlineThickness);
-
-        // Position 3: Seconds
-        if (_showSeconds) {
-            _secondsChart
-                .withCenter(itemSpace / 2 + (itemSpace * 2), cy)
-                .withRadius(radius)
-                .withOutlineThickness(outlineThickness);
-        }
-    }
 }
