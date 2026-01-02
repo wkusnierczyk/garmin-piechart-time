@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <fonts>
+        <font id="StandardTimeFont" filename="Ubuntu-Regular-19.fnt" antialias="true" />
+    </fonts>
+</resources>
