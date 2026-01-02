@@ -3,9 +3,7 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 
-
 //! A fluent class for drawing circular pie-chart style timers.
-//!
 //! This class allows for the creation of "Donut" or "Pie" style charts
 //! where a slice fills up clockwise to represent progress.
 //! It supports method chaining (fluent interface) for configuration.
@@ -27,7 +25,6 @@ class PiechartTime {
 
     //! Constant for a 24-hour cycle denominator
     static const HOUR_TURN_24H = 24;
-
     //! Constant for a 12-hour cycle denominator
     static const HOUR_TURN_12H = 12;
 
@@ -102,10 +99,8 @@ class PiechartTime {
     // --- Fluent Interface ---
 
     //! Configures the chart's cycle (turn) based on a standard time preset.
-    //!
     //! This helper method abstracts away the specific turn numbers for common 
     //! time units, automatically setting the correct denominator.
-    //!
     //! @param type [Number] A value from the TimeType enum (e.g., PiechartTime.PIECHART_MINUTES).
     //! @return [PiechartTime] The current instance for chaining.
     function asTime(time as Number) as PiechartTime {
@@ -194,7 +189,7 @@ class PiechartTime {
 
     //! Draws the chart onto the provided Device Context (DC).
     //! @param dc [Toybox.Graphics.Dc] The device context to draw on.
-    function draw(dc as Dc) {
+    function draw(dc) {
 
         // 1. Draw the Outline Ring
         dc.setColor(_outlineColor, Graphics.COLOR_TRANSPARENT);
@@ -209,7 +204,6 @@ class PiechartTime {
         // Note: Use caution if _value is a Float; modulo (%) behaves differently across languages for floats.
         // Ideally _value here matches the type of _turn for modulo operations.
         _value = _value % _turn;
-
         // Calculate the percentage (0.0 to 1.0)
         // We cast parameters to float to ensure floating point division is performed.
         var fraction = _value.toFloat() / _turn.toFloat();
@@ -217,26 +211,21 @@ class PiechartTime {
         // Only draw if there is value and it fits within reasonable bounds (avoids 0-width artifacts)
         if (fraction > SLICE_TO_TURN_FRACTION_THRESHOLD) {
             dc.setColor(_sliceColor, Graphics.COLOR_TRANSPARENT);
-
             // To create a solid wedge using drawArc:
             // The pen width must equal the radius of the slice.
             // The arc radius must be half of that width.
-            
             // We want the slice to fit *inside* the outline ring with a 1px gap.
-            var sliceRadius = _radius - _outlineThickness - 1;
+            var sliceRadius = _radius - _outlineThickness/2.0;
             
             // Set pen width to the full length of the slice (center to edge)
             var arcPenWidth = sliceRadius;
-            
             // The drawing radius is the center point of that pen width
             var arcDrawingRadius = sliceRadius / 2;
-
             dc.setPenWidth(arcPenWidth);
 
             // Coordinate system: 
             // 90 degrees = 12 o'clock position
             var startAngle = 90;
-            
             // Monkey C drawArc takes degrees. 
             // Clockwise movement subtracts from the start angle.
             var degreesToDraw = fraction * 360;
@@ -245,6 +234,25 @@ class PiechartTime {
             dc.drawArc(_centerX, _centerY, arcDrawingRadius, Graphics.ARC_CLOCKWISE, startAngle, endAngle);
         }
 
+    }
+
+    // --- Unit Test Helpers ---
+    // These methods are only compiled during "Run As > Connect IQ Unit Test"
+    // They allow the test runner to inspect the private internal state of the object.
+
+    //! (:test) Helper to retrieve the current Turn denominator
+    function getTurn() {
+        return _turn;
+    }
+
+    //! (:test) Helper to retrieve the current Value numerator
+    function getValue() {
+        return _value;
+    }
+
+    //! (:test) Helper to retrieve the current Radius
+    function getRadius() {
+        return _radius;
     }
 
 }

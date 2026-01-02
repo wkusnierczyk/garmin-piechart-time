@@ -20,10 +20,7 @@ const STANDARD_TIME_LAYOUT_ID = "StandardTimeLayout";
 
 
 // Fonts
-const HOUR_FONT = Application.loadResource(Rez.Fonts.HourFont);
-const MINUTES_FONT = Application.loadResource(Rez.Fonts.MinutesFont);
-const SECONDS_FONT = Application.loadResource(Rez.Fonts.SecondsFont);
-
+const STANDARD_TIME_FONT = Application.loadResource(Rez.Fonts.StandardTimeFont);
 
 // Settings
 const CUSTOMIZE_MENU_TITLE = Application.loadResource(Rez.Strings.Time);

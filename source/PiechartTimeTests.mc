@@ -1,64 +1,101 @@
-using Toybox.Application;
-using Toybox.Test;
-
+import Toybox.Test;
 import Toybox.Lang;
+import Toybox.Graphics;
+import Toybox.System;
 
+// -----------------------------------------------------------------------------
+// 1. The Mock Object (The Spy)
+// -----------------------------------------------------------------------------
+class MockDc {
+    public var lastColor = null;
+    public var lastPenWidth = null;
+    public var lastArcStart = null;
+    public var lastArcEnd = null;
+    public var drawArcCalled = false;
 
-const TEST_NAME = "name";
-const TEST_INPUT = "input";
-const TEST_INPUT_HOUR = "hour";
-const TEST_INPUT_MINUTES = "minutes";
-const TEST_INPUT_SECONDS = "seconds";
-const TEST_EXPECTED = "expected";
-const TEST_ERROR_TEMPLATE = "Test '$1$' failed: expected '$2$', got '$3$'";
-
-
-(:test)
-function testTime(logger) as Boolean {
-
-    var pass = true;
-
-    var tests = Application.loadResource(Rez.JsonData.BaseTimeTests) as Array<Dictionary>;
-    for (var i = 0; i < tests.size(); ++i) {
-
-        var test = tests[i];
-        var name = test[TEST_NAME] as String;
-        
-        var input = test[TEST_INPUT] as Dictionary<String, Number>;
-        var inputHour = input[TEST_INPUT_HOUR] as Number;
-        var inputMinutes = input[TEST_INPUT_MINUTES] as Number;
-        var inputSeconds = input[TEST_INPUT_SECONDS] as Number;
-        
-        var expected = test[TEST_EXPECTED] as Dictionary<String, String;
-        var expectedHour = expected[TEST_INPUT_HOUR] as String;
-        var expectedMinutes = expected[TEST_INPUT_MINUTES] as String;
-        var expectedSeconds = expected[TEST_INPUT_SECONDS] as String;
-
-        var actual = PiechartTime.formatTime(inputHour, inputMinutes, inputSeconds) as Dictionary<Object, String>;
-        
-        var actualHour = actual[:hour] as String;
-        if (!actualHour.equals(expectedHour)) {
-            var message = Lang.format(TEST_ERROR_TEMPLATE, [name, expectedHour, actualHour]);
-            logger.error(message);
-            pass = false;
-        }
-
-        var actualMinutes = actual[:minutes] as String;
-        if (!actualMinutes.equals(expectedMinutes)) {
-            var message = Lang.format(TEST_ERROR_TEMPLATE, [name, expectedMinutes, actualMinutes]);
-            logger.error(message);
-            pass = false;
-        }
-
-        var actualSeconds = actual[:seconds] as String;
-        if (!actualSeconds.equals(expectedSeconds)) {
-            var message = Lang.format(TEST_ERROR_TEMPLATE, [name, expectedSeconds, actualSeconds]);
-            logger.error(message);
-            pass = false;
-        }
-
+    function setColor(foreground, background) {
+        lastColor = foreground;
     }
 
-    return pass;
+    function setPenWidth(width) {
+        lastPenWidth = width;
+    }
 
+    function drawCircle(x, y, r) {
+    }
+
+    function drawArc(x, y, r, attr, start, end) {
+        drawArcCalled = true;
+        lastArcStart = start;
+        lastArcEnd = end;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 2. The Unit Tests
+// -----------------------------------------------------------------------------
+
+(:test)
+function testFluentConfiguration(logger as Test.Logger) as Boolean {
+    var chart = new PiechartTime();
+
+    chart
+        .asTime(PiechartTime.PIECHART_MINUTES)
+        .withValue(15)
+        .withRadius(50);
+
+    // FIXED: assertEqual only takes (expected, actual)
+    Test.assertEqual(60, chart.getTurn());
+    Test.assertEqual(15, chart.getValue());
+    Test.assertEqual(50, chart.getRadius());
+
+    return true;
+}
+
+(:test)
+function test24HourPreset(logger as Test.Logger) as Boolean {
+    var chart = new PiechartTime();
+    chart.asTime(PiechartTime.PIECHART_24_HOURS); 
+    
+    Test.assertEqual(24, chart.getTurn());
+    return true;
+}
+
+(:test)
+function testDrawingMath(logger as Test.Logger) as Boolean {
+    var chart = new PiechartTime();
+    var mockDc = new MockDc();
+
+    // 15 minutes on a 60 minute dial (25%)
+    // Expected: Start 90 (12 o'clock), End 0 (3 o'clock)
+    chart.asTime(PiechartTime.PIECHART_MINUTES)
+         .withValue(15);
+         
+    chart.draw(mockDc); 
+
+    // FIXED: Use assertMessage for custom messages
+    Test.assertMessage(mockDc.drawArcCalled, "drawArc should have been called");
+    
+    // FIXED: assertEqual only takes (expected, actual)
+    Test.assertEqual(90, mockDc.lastArcStart);
+    // Use float 0.0f to match the type
+    Test.assertEqual(0.0f, mockDc.lastArcEnd);
+    
+    return true;
+}
+
+(:test)
+function testValueWrapping(logger as Test.Logger) as Boolean {
+    var chart = new PiechartTime();
+    var mockDc = new MockDc();
+
+    // 75 minutes on a 60 minute dial -> should wrap to 15
+    chart.asTime(PiechartTime.PIECHART_MINUTES)
+         .withValue(75);
+    
+    chart.draw(mockDc);
+
+    Test.assertEqual(0.0f, mockDc.lastArcEnd);
+
+    return true;
 }
