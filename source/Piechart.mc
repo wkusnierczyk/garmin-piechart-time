@@ -20,7 +20,9 @@ class Piechart {
         //! Preset for standard 0-60 minutes.
         PIECHART_MINUTES,
         //! Preset for standard 0-60 seconds.
-        PIECHART_SECONDS
+        PIECHART_SECONDS,
+        //! Preset for 100 beats (Swatch time or otherwise).
+        PIECHART_BEATS
     }
 
     //! Constant for a 24-hour cycle denominator
@@ -36,6 +38,9 @@ class Piechart {
 
     //! Default seconds denominator (60).
     static const SECONDS_TURN = 60;
+
+    //! Default beats denominator (100).
+    static const BEATS_TURN = 100;
 
     //! The initial default turn (denominator) for a new instance.
     const DEFAULT_TURN = DEFAULT_HOUR_TURN;
@@ -54,10 +59,16 @@ class Piechart {
 
     //! Default color for the filled slice.
     const DEFAULT_SLICE_COLOR = Graphics.COLOR_WHITE;
+    
+    //! Default color for the unfilled background (fixing transparency issues).
+    const DEFAULT_UNFILLED_COLOR = Graphics.COLOR_BLACK;
 
     //! Threshold to prevent drawing artifacts for extremely small values.
     //! If the fraction of the circle is less than this, the slice is not drawn.
     const SLICE_TO_TURN_FRACTION_THRESHOLD = 0.001;
+
+    //! Default order of drawing the outline and the slice.
+    const DEFAULT_SLICE_OVER_OUTLINE = false;
 
     // --- Member Variables ---
 
@@ -76,14 +87,20 @@ class Piechart {
     //! The radius of the chart (center to outer edge).
     private var _radius = DEFAULT_RADIUS;
 
-    //! The color of the outer boundary ring.
-    private var _outlineColor = DEFAULT_OUTLINE_COLOR;
-
     //! The thickness of the outer boundary ring.
     private var _outlineThickness = DEFAULT_OUTLINE_THICKNESS;
 
+    //! The color of the outer boundary ring.
+    private var _outlineColor = DEFAULT_OUTLINE_COLOR;
+
     //! The color of the active time slice.
     private var _sliceColor = DEFAULT_SLICE_COLOR;
+    
+    //! The color of the inactive/background disc.
+    private var _unfilledColor = DEFAULT_UNFILLED_COLOR;
+
+    //! The order of drawing the outline and the slice.
+    private var _sliceOverOutline = DEFAULT_SLICE_OVER_OUTLINE;
 
     // --- Initialization ---
 
@@ -118,7 +135,7 @@ class Piechart {
                 _turn = SECONDS_TURN;
                 break;
             default:
-                // Safety fallback to prevent undefined behavior if an invalid integer is passed
+                // Safety fallback to prevent undefined behavior
                 System.println("Piechart: Unknown time type passed to asTime(), defaulting to 12H.");
                 _turn = HOUR_TURN_12H;
                 break;
@@ -184,6 +201,29 @@ class Piechart {
         _sliceColor = color;
         return self;
     }
+    
+    //! Sets the color of the background "unfilled" disc.
+    //! @param color [Graphics.ColorType] The color constant.
+    //! @return [Piechart] The current instance for chaining.
+    function withUnfilledColor(color as Graphics.ColorType) as Piechart {
+        _unfilledColor = color;
+        return self;
+    }
+
+    //! Sets the order of drawing to slice over outline.
+    //! @return [Piechart] The current instance for chaining.
+    function withSliceOverOutline() as Piechart {
+        _sliceOverOutline = true;
+        return self;
+    }
+
+    //! Sets the order of drawing to outline over slice.
+    //! @return [Piechart] The current instance for chaining.
+    function withOutlineOverSlice() as Piechart {
+        _sliceOverOutline = false;
+        return self;
+    }
+
 
     // --- Drawing Logic ---
 
@@ -191,43 +231,90 @@ class Piechart {
     //! @param dc [Toybox.Graphics.Dc] The device context to draw on.
     function draw(dc) {
 
-        // 1. Draw the Outline Ring
-        dc.setColor(_outlineColor, Graphics.COLOR_TRANSPARENT);
-        dc.setPenWidth(_outlineThickness);
-        
-        // drawCircle draws along the center of the pen width.
-        // We subtract half the thickness so the stroke sits exactly inside the defined radius.
-        dc.drawCircle(_centerX, _centerY, _radius - (_outlineThickness / 2.0));
+        // Geometry Calculations
+
+        // Calculate the radius of the slice depending on whether it should cover the outline or not.
+
+        // var sliceRadius;
+        // if (_sliceOverOutline) {
+        //     sliceRadius = _radius + (_outlineThickness / 2.0);
+        // } else {
+        //     sliceRadius = _radius - (_outlineThickness / 2.0);
+        // }
+
+        // To draw a solid wedge/pie using drawArc:
+        // The pen width must equal the radius of the slice.
+        // The arc radius must be half of that width.
+        // We want the slice to fit *inside* the outline ring with a 1px gap (implied by thickness).
+
+        // var arcPenWidth = sliceRadius;
+        // var arcDrawingRadius = sliceRadius / 2;
+
+        // 1. Draw "Unfilled" Background (The Disc)
+        // We draw a full circle in the 'unfilled' color first. 
+        // This acts as the background for the chart, covering whatever is behind it (Painter's Algorithm).
+
+        // dc.setColor(_unfilledColor, Graphics.COLOR_TRANSPARENT);
+        // dc.setPenWidth(arcPenWidth);
+        // dc.drawCircle(_centerX, _centerY, arcDrawingRadius);
+
+        _drawUnfilled(dc);
 
         // 2. Draw the Pie Slice
         // Handle wrapping (e.g., if value is 25 hours on a 24h clock, it becomes 1).
-        // Note: Use caution if _value is a Float; modulo (%) behaves differently across languages for floats.
-        // Ideally _value here matches the type of _turn for modulo operations.
-        _value = _value % _turn;
-        // Calculate the percentage (0.0 to 1.0)
-        // We cast parameters to float to ensure floating point division is performed.
-        var fraction = _value.toFloat() / _turn.toFloat();
 
-        // Only draw if there is value and it fits within reasonable bounds (avoids 0-width artifacts)
+        // _value = _value % _turn;
+        // var fraction = _value.toFloat() / _turn.toFloat();
+
+        // if (fraction > SLICE_TO_TURN_FRACTION_THRESHOLD) {
+        //     dc.setColor(_sliceColor, Graphics.COLOR_TRANSPARENT);
+        //     dc.setPenWidth(arcPenWidth);
+
+        //     var startAngle = 90; // 12 o'clock
+        //     var degreesToDraw = fraction * 360;
+        //     var endAngle = startAngle - degreesToDraw;
+
+        //     dc.drawArc(_centerX, _centerY, arcDrawingRadius, Graphics.ARC_CLOCKWISE, startAngle, endAngle);
+        // }
+        
+        // 3. Draw the Outline Ring (Last, so it sits on top)
+
+        // dc.setColor(_outlineColor, Graphics.COLOR_TRANSPARENT);
+        // dc.setPenWidth(_outlineThickness);
+        // // Draw along the center of the pen width
+        // dc.drawCircle(_centerX, _centerY, _radius - (_outlineThickness / 2.0));
+
+        if (_sliceOverOutline) {
+            _drawOutline(dc);
+            _drawSlice(dc);
+        } else {
+            _drawSlice(dc);
+            _drawOutline(dc);
+        }
+
+    }
+
+    private function _drawUnfilled(dc) {
+        var radius = _radius + (_outlineThickness / 2.0);
+        var arcDrawingRadius = radius / 2;
+        dc.setColor(_unfilledColor, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(radius);
+        dc.drawCircle(_centerX, _centerY, arcDrawingRadius);
+    }
+
+    private function _drawSlice(dc) {
+
+        var sliceRadius = _radius + (_outlineThickness / 2.0);
+        var arcPenWidth = sliceRadius;
+        var arcDrawingRadius = sliceRadius / 2;
+        var value = _value % _turn;
+        var fraction = value.toFloat() / _turn.toFloat();
+
         if (fraction > SLICE_TO_TURN_FRACTION_THRESHOLD) {
             dc.setColor(_sliceColor, Graphics.COLOR_TRANSPARENT);
-            // To create a solid wedge using drawArc:
-            // The pen width must equal the radius of the slice.
-            // The arc radius must be half of that width.
-            // We want the slice to fit *inside* the outline ring with a 1px gap.
-            var sliceRadius = _radius - _outlineThickness/2.0;
-            
-            // Set pen width to the full length of the slice (center to edge)
-            var arcPenWidth = sliceRadius;
-            // The drawing radius is the center point of that pen width
-            var arcDrawingRadius = sliceRadius / 2;
             dc.setPenWidth(arcPenWidth);
 
-            // Coordinate system: 
-            // 90 degrees = 12 o'clock position
-            var startAngle = 90;
-            // Monkey C drawArc takes degrees. 
-            // Clockwise movement subtracts from the start angle.
+            var startAngle = 90; // 12 o'clock
             var degreesToDraw = fraction * 360;
             var endAngle = startAngle - degreesToDraw;
 
@@ -236,21 +323,27 @@ class Piechart {
 
     }
 
-    // --- Unit Test Helpers ---
-    // These methods are only compiled during "Run As > Connect IQ Unit Test"
-    // They allow the test runner to inspect the private internal state of the object.
+    private function _drawOutline(dc) {
+        dc.setColor(_outlineColor, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(_outlineThickness);
+        // Draw along the center of the pen width
+        dc.drawCircle(_centerX, _centerY, _radius - (_outlineThickness / 2.0));
+    }
 
-    //! (:test) Helper to retrieve the current Turn denominator
+    // --- Unit Test Helpers ---
+    // These methods allow the test runner to inspect the private internal state of the object.
+    
+    //! Helper to retrieve the current Turn denominator
     function getTurn() {
         return _turn;
     }
 
-    //! (:test) Helper to retrieve the current Value numerator
+    //! Helper to retrieve the current Value numerator
     function getValue() {
         return _value;
     }
 
-    //! (:test) Helper to retrieve the current Radius
+    //! Helper to retrieve the current Radius
     function getRadius() {
         return _radius;
     }

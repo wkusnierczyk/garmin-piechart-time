@@ -36,8 +36,8 @@ class PiechartTimeView extends WatchUi.WatchFace {
         View.onUpdate(dc);
 
         _piechartTime
-            .withLayout(PiechartTime.LAYOUT_HORIZONTAL)
             .withLayout(PiechartTime.LAYOUT_CONCENTRIC)
+            .withLayout(PiechartTime.LAYOUT_HORIZONTAL)
             .withSeconds()
             .withColorTheme(_availableThemes.getCurrentTheme())
             .draw(dc);

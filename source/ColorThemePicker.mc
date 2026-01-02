@@ -1,38 +1,40 @@
 using Toybox.Graphics;
-
 import Toybox.WatchUi;
 import Toybox.Lang;
 import Toybox.System;
-
 
 //! Manages the loading, storage, and selection of ColorThemes.
 //! Replaces the static ColorThemeLoader with a stateful picker.
 class ColorThemePicker {
 
     // --- JSON Keys ---
-    static const DEFAULT_THEME_KEY = "default";
     static const THEMES_KEY = "themes";
     static const COLORS_KEY = "colors";
     static const NAME_KEY = "name";
-    static const SLICE_KEY = "slice";
-    static const OUTLINE_KEY = "outline";
+    
     static const HOURS_KEY = "hours";
     static const MINUTES_KEY = "minutes";
     static const SECONDS_KEY = "seconds";
-
+    
+    static const SLICE_KEY = "slice";
+    static const OUTLINE_KEY = "outline";
+    static const UNFILLED_KEY = "unfilled";
+    
+    static const DEFAULT_THEME_KEY = "default";
 
     // --- Fallback Defaults ---
     static const DEFAULT_THEME_NAME = "Monochrome";
 
-    static const DEFAULT_HOUR_SLICE_COLOR = Graphics.COLOR_WHITE;
+    static const DEFAULT_HOUR_SLICE_COLOR = Graphics.COLOR_LT_GRAY;
     static const DEFAULT_HOUR_OUTLINE_COLOR = Graphics.COLOR_WHITE;
-
-    static const DEFAULT_MINUTE_SLICE_COLOR = Graphics.COLOR_LT_GRAY;
+    
+    static const DEFAULT_MINUTE_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
     static const DEFAULT_MINUTE_OUTLINE_COLOR = Graphics.COLOR_LT_GRAY;
-
+    
     static const DEFAULT_SECOND_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
     static const DEFAULT_SECOND_OUTLINE_COLOR = Graphics.COLOR_DK_GRAY;
-
+    
+    static const DEFAULT_UNFILLED_COLOR = Graphics.COLOR_BLACK; // Default background
 
     // --- State ---
     private var _themes as Array<ColorTheme>;
@@ -55,15 +57,15 @@ class ColorThemePicker {
             _currentIndex = 0;
         }
 
-        // TODO
+        // 3. Populate names list
         for (var i = 0; i < _themes.size(); ++i) {
             _themeNames.add(_themes[i].name);
         }
-
     }
 
     // --- Public API ---
 
+    //! Return total number of loaded themes
     function size() as Number {
         return _themes.size();
     }
@@ -98,14 +100,8 @@ class ColorThemePicker {
 
     //! Loads themes and parses the "default" key to set initial index
     private function loadFromResource() {
-
-        var themes = [];
-        var currentIndex = 0;
-
         try {
             var specification = WatchUi.loadResource(Rez.JsonData.ColorThemes) as Dictionary;
-            // TODO
-            // if (specification == null) { return; }
 
             // 1. Parse Themes List
             var themesList = specification[THEMES_KEY] as Array;
@@ -118,50 +114,60 @@ class ColorThemePicker {
                 var minutesColors = colors[MINUTES_KEY] as Dictionary;
                 var secondsColors = colors[SECONDS_KEY] as Dictionary;
 
-                // Parse using your specific helper implementation
+                // Parse using specific helpers, defaulting to BLACK for unfilled if missing
                 var theme = new ColorTheme(
                     name,
+                    // Hours
                     parseColor(hourColors[SLICE_KEY]),
                     parseColor(hourColors[OUTLINE_KEY]),
+                    parseOptionalColor(hourColors, UNFILLED_KEY),
+                    
+                    // Minutes
                     parseColor(minutesColors[SLICE_KEY]),
                     parseColor(minutesColors[OUTLINE_KEY]),
+                    parseOptionalColor(minutesColors, UNFILLED_KEY),
+                    
+                    // Seconds
                     parseColor(secondsColors[SLICE_KEY]),
-                    parseColor(secondsColors[OUTLINE_KEY])
+                    parseColor(secondsColors[OUTLINE_KEY]),
+                    parseOptionalColor(secondsColors, UNFILLED_KEY)
                 );
-                themes.add(theme);
+                _themes.add(theme);
             }
 
             // 2. Set Default Index based on JSON "default" key
-            // Look for "default": "ThemeName" in the JSON root
             var defaultName = specification[DEFAULT_THEME_KEY] as String;
-            if (defaultName != null) {
-                for (var i = 0; i < themes.size(); ++i) {
-                    if (themes[i].name.equals(defaultName)) {
-                        currentIndex = i;
-                        break;
-                    }
+            for (var i = 0; i < _themes.size(); ++i) {
+                if (_themes[i].name.equals(defaultName)) {
+                    _currentIndex = i;
+                    break;
                 }
             }
 
         } catch (ex) {
             System.println("ThemePicker: Error loading themes - " + ex.getErrorMessage());
         }
-        _themes = themes;
-        _currentIndex = currentIndex;
-
     }
 
     //! Creates the hardcoded default theme
     private function createFallbackTheme() as ColorTheme {
         return new ColorTheme(
             DEFAULT_THEME_NAME,
-            DEFAULT_HOUR_SLICE_COLOR, DEFAULT_HOUR_OUTLINE_COLOR,
-            DEFAULT_MINUTE_SLICE_COLOR, DEFAULT_MINUTE_OUTLINE_COLOR,
-            DEFAULT_SECOND_SLICE_COLOR, DEFAULT_SECOND_OUTLINE_COLOR
+            DEFAULT_HOUR_SLICE_COLOR, DEFAULT_HOUR_OUTLINE_COLOR, DEFAULT_UNFILLED_COLOR,
+            DEFAULT_MINUTE_SLICE_COLOR, DEFAULT_MINUTE_OUTLINE_COLOR, DEFAULT_UNFILLED_COLOR,
+            DEFAULT_SECOND_SLICE_COLOR, DEFAULT_SECOND_OUTLINE_COLOR, DEFAULT_UNFILLED_COLOR
         );
     }
+    
+    //! Helper: Parse optional color key. Returns DEFAULT_UNFILLED if missing.
+    private function parseOptionalColor(dict as Dictionary, key as String) as Number {
+        if (dict.hasKey(key)) {
+            return parseColor(dict[key]);
+        }
+        return DEFAULT_UNFILLED_COLOR;
+    }
 
-    //! Helper: Parse hex string to Number using your specific logic
+    //! Helper: Parse hex string to Number
     private function parseColor(hexString as String) as Number {
         var valueOf = {
             '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4,
@@ -169,7 +175,6 @@ class ColorThemePicker {
             'A' => 10, 'B' => 11, 'C' => 12, 'D' => 13, 'E' => 14, 'F' => 15,
             'a' => 10, 'b' => 11, 'c' => 12, 'd' => 13, 'e' => 14, 'f' => 15
         };
-
         var number = 0;
         var characters = hexString.toCharArray();
         
@@ -186,5 +191,4 @@ class ColorThemePicker {
         
         return number;
     }
-
 }

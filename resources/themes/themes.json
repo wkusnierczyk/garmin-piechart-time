@@ -5,15 +5,18 @@
             "colors": {
                 "hours": {
                     "outline": "FFFFFF",
-                    "slice": "FFFFFF"
+                    "slice": "FFFFFF",
+                    "unfilled": "000000"
                 },
                 "minutes": {
                     "outline": "AAAAAA",
-                    "slice": "AAAAAA"
+                    "slice": "AAAAAA",
+                    "unfilled": "000000"
                 },
                 "seconds": {
                     "outline": "555555",
-                    "slice": "555555"
+                    "slice": "555555",
+                    "unfilled": "000000"
                 }
             },
             "name": "monochrome"
@@ -22,15 +25,18 @@
             "colors": {
                 "hours": {
                     "outline": "550055",
-                    "slice": "FF00FF"
+                    "slice": "FF00FF",
+                    "unfilled": "000000"
                 },
                 "minutes": {
                     "outline": "005500",
-                    "slice": "00FF00"
+                    "slice": "00FF00",
+                    "unfilled": "000000"
                 },
                 "seconds": {
                     "outline": "005555",
-                    "slice": "00FFFF"
+                    "slice": "00FFFF",
+                    "unfilled": "000000"
                 }
             },
             "name": "neon"
@@ -39,15 +45,18 @@
             "colors": {
                 "hours": {
                     "outline": "000055",
-                    "slice": "0000FF"
+                    "slice": "0000FF",
+                    "unfilled": "000000"
                 },
                 "minutes": {
                     "outline": "000088",
-                    "slice": "0088FF"
+                    "slice": "0088FF",
+                    "unfilled":"000000"
                 },
                 "seconds": {
                     "outline": "005555",
-                    "slice": "00FFFF"
+                    "slice": "00FFFF",
+                    "unfilled": "000000"
                 }
             },
             "name": "ocean"
