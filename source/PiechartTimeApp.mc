@@ -15,7 +15,7 @@ class PiechartTimeApp extends Application.AppBase {
     }
 
     function getInitialView() {
-        return [ new TimeView() ];
+        return [ new PiechartTimeView() ];
     }
 
     function onSettingsChanged() as Void {
