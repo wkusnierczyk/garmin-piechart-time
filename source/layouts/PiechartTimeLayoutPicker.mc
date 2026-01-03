@@ -30,7 +30,7 @@ class PiechartTimeLayoutPicker {
     //! Returns the currently selected layout strategy
     //! @return [PiechartTimeLayout] The active layout instance
     function getCurrentLayout() as PiechartTimeLayout {
-        _currentIndex = PropertyUtils.getPropertyElseDefault(LAYOUT_PROPERTY, LAYOUT_DEFAULT) - 1;
+        _currentIndex = PropertyUtils.getPropertyElseDefault(LAYOUT_PROPERTY, LAYOUT_DEFAULT);
         return _layouts[_currentIndex];
     }
     
@@ -38,4 +38,5 @@ class PiechartTimeLayoutPicker {
     function getCount() as Number {
         return _layouts.size();
     }
+    
 }

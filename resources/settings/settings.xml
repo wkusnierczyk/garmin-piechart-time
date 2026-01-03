@@ -10,21 +10,21 @@
 
     <setting propertyKey="@Properties.Layout" title="@Strings.LayoutMenuTitile">
         <settingConfig type="list">
-            <listEntry value="1">@Strings.LayoutConcentric</listEntry>
-            <listEntry value="2">@Strings.LayoutHorizontal</listEntry>
-            <listEntry value="3">@Strings.LayoutStacked</listEntry>
-            <listEntry value="4">@Strings.LayoutDiminishing</listEntry>
+            <listEntry value="0">@Strings.LayoutConcentric</listEntry>
+            <listEntry value="1">@Strings.LayoutHorizontal</listEntry>
+            <listEntry value="2">@Strings.LayoutStacked</listEntry>
+            <listEntry value="3">@Strings.LayoutDiminishing</listEntry>
         </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.Theme" title="@Strings.ThemeMenuTitile">
         <settingConfig type="list">
-            <listEntry value="1">@Strings.ThemeMonochrome</listEntry>
-            <listEntry value="2">@Strings.ThemeFrench</listEntry>
-            <listEntry value="3">@Strings.ThemeItalian</listEntry>
-            <listEntry value="4">@Strings.ThemeRed</listEntry>
-            <listEntry value="5">@Strings.ThemeOrange</listEntry>
-            <listEntry value="6">@Strings.ThemeOcean</listEntry>
+            <listEntry value="0">@Strings.ThemeMonochrome</listEntry>
+            <listEntry value="1">@Strings.ThemeFrench</listEntry>
+            <listEntry value="2">@Strings.ThemeItalian</listEntry>
+            <listEntry value="3">@Strings.ThemeRed</listEntry>
+            <listEntry value="4">@Strings.ThemeOrange</listEntry>
+            <listEntry value="5">@Strings.ThemeOcean</listEntry>
         </settingConfig>
     </setting>
 
