@@ -23,25 +23,21 @@ class ColorTheme {
     public var secondsUnfilled as Number;
 
     //! Constructor
-    function initialize(
-        name, 
-        hourSlice, hourOutline, hourUnfilled,
-        minutesSlice, minutesOutline, minutesUnfilled,
-        secondsSlice, secondsOutline, secondsUnfilled
-    ) {
+    function initialize(name, hourColors as Dictionary, minutesColors as Dictionary, secondsColors as Dictionary) {
+
         self.name = name;
+
+        self.hourSlice = hourColors[:hourSlice];
+        self.hourOutline = hourColors[:hourOutline];
+        self.hourUnfilled = hourColors[:hourUnfilled];
         
-        self.hourSlice = hourSlice;
-        self.hourOutline = hourOutline;
-        self.hourUnfilled = hourUnfilled;
+        self.minutesSlice = minutesColors[:minutesSlice];
+        self.minutesOutline = minutesColors[:minutesOutline];
+        self.minutesUnfilled = minutesColors[:minutesUnfilled];
         
-        self.minutesSlice = minutesSlice;
-        self.minutesOutline = minutesOutline;
-        self.minutesUnfilled = minutesUnfilled;
-        
-        self.secondsSlice = secondsSlice;
-        self.secondsOutline = secondsOutline;
-        self.secondsUnfilled = secondsUnfilled;
+        self.secondsSlice = secondsColors[:secondsSlice];
+        self.secondsOutline = secondsColors[:secondsOutline];
+        self.secondsUnfilled = secondsColors[:secondsUnfilled];
     }
 
     function apply(hour as Piechart, minutes as Piechart, seconds as Piechart) {
