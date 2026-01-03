@@ -4,7 +4,7 @@ A minimalist, elegant, nerdy, typography-focused Garmin Connect IQ watch face th
 
 ![Piechart Time](resources/graphics/PiechartTimeHero-small.png)
 
-Available from [Garmin Connect IQ Developer portal](https://apps.garmin.com/apps/{blank:app-id}) or through the Connect IQ mobile app.
+Available from [Garmin Connect IQ Developer portal](https://apps.garmin.com/apps/ed89cdfc-f392-42ea-a18a-4c62a0bdc20b) or through the Connect IQ mobile app.
 
 > **Note**  
 > Piechart Time is part of a [collection of unconventional Garmin watch faces](https://github.com/wkusnierczyk/garmin-watch-faces). It has been developed for fun, as a proof of concept, and as a learning experience.
