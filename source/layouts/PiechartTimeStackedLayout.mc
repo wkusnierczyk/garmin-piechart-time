@@ -25,12 +25,13 @@ class PiechartTimeStackedLayout extends PiechartTimeLayout {
 
         // --- 2. Geometry Setup ---
         
-        // Centers: 33% (Left) and 67% (Right)
-        var hoursX = (screenWidth * 0.33).toNumber();
-        var stackX = (screenWidth * 0.67).toNumber();
+        // Centers: 37% (Left) and 71% (Right)
+        var hoursX = (screenWidth * 0.37).toNumber();
+        var stackX = (screenWidth * 0.71).toNumber();
         
         // Hours Radius: 22% of Screen Height
-        var hoursRadius = (screenHeight * 0.22).toNumber();
+        var spaceY = 0.22;
+        var hoursRadius = (screenHeight * spaceY).toNumber();
         var hoursTop = centerY - hoursRadius;
         var hoursBottom = centerY + hoursRadius;
         var totalHeight = hoursRadius * 2;
