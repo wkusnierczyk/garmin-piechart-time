@@ -1,6 +1,6 @@
 # Garmin Piechart Time
 
-A minimalist, elegant, nerdy, typography-focused Garmin Connect IQ watch face that displays the current time {blank:short-description}.
+A minimalist, elegant, nerdy, typography-focused Garmin Connect IQ watch face that displays the current time as pie charts.
 
 ![Piechart Time](resources/graphics/PiechartTimeHero-small.png)
 
@@ -24,7 +24,13 @@ Available from [Garmin Connect IQ Developer portal](https://apps.garmin.com/apps
 
 ## Piechart time
 
-{blank:description}
+Piechart Time employes the idea of visualizing the passage of time as growing slices of a pie chart.
+It shows three (hour, minutes, seconds) or two (hour, minutes) pie charts, depending on a customizable user setting.
+An empty slice indicates noon or midnight (12 hours; 12/24h time toggle might be implemented as a user steting in a future version), a full hour (60 minutes) or a full minute (60 seconds).
+A 1/4 slice is 3 hours, 15 minutes, or 15 seconds.
+
+While reading time from a pie chart may lack precision, it does give a visually pleasing indication of what the time is approximately.
+If needed, the time can be optionally displayed in the standard form below the pie charts.
 
 ## Features
 
@@ -32,13 +38,19 @@ The Piechart Time watch face supports the following features:
 
 |Screenshot|Description|
 |-|:-|
-{blank:features}
+|![]()|**Horizontal layout**<br/> Time shown as three or two piecharts besides each other.|
+|![]()|**Concentric layout**<br/> The shown as three or two concentric picharts, with hour as the smallest pie chart in the front, and minutes and seconds as larger pie charts at the back.|
+|![]()|**Stacked layout**<br/> The shown as three or two picharts forming a cluster, with hour as the largest pie chart on the left, and minutes and seconds as smaller pie charts at aligned to its right edge.|
+|![]()|**Diminishing layout**<br/> The shown as three or two picharts placed horizontally, with decreasing diameters from hour as the largest pie chart on the left, towards seconds as the smallest pie charts on the right.|
+|![]()|**Color schemes**<br/> Several color schemes are available: Monochrome, French flag colors, Italian flag colors, Red, Orange, Ocean.|
+|![]()|**Seconds**<br/> The time may be displayed as three or two pie charts, with or without seconds.|
+|![]()|**Standard time**<br/> In addition to pie charts, standard time display may be enabled to show the time in dimmed, small font at the bottom of the screen.|
 
 ## Fonts
 
 The Piechart Time watch face uses custom fonts:
 
-{blank:fonts}
+* [Ubuntu](https://fonts.google.com/specimen/SUSE+Mono) for standard time (Ubuntu-Regular).
 
 > The development of Garmin watch faces motivated the implementation of two useful tools:
 > * A TTF to FNT+PNG converter ([`ttf2bmp`](https://github.com/wkusnierczyk/ttf2bmp)).  
@@ -56,7 +68,21 @@ The font development proceeded as follows:
 
 The table below lists all font sizes provided for the supported screen resolutions.
 
-{blank:font-table}
+| Resolution |    Shape     |    Element    |      Font      | Size |
+| ---------: | :----------- | :------------ | :------------- | ---: |
+|  148 x 205 | rectangle    | Standard time | Ubuntu regular |   16 |
+|  176 x 176 | semi-octagon | Standard time | Ubuntu regular |   19 |
+|  215 x 180 | semi-round   | Standard time | Ubuntu regular |   19 |
+|  218 x 218 | round        | Standard time | Ubuntu regular |   23 |
+|  240 x 240 | round        | Standard time | Ubuntu regular |   26 |
+|  240 x 240 | rectangle    | Standard time | Ubuntu regular |   26 |
+|  260 x 260 | round        | Standard time | Ubuntu regular |   28 |
+|  280 x 280 | round        | Standard time | Ubuntu regular |   30 |
+|  320 x 360 | rectangle    | Standard time | Ubuntu regular |   34 |
+|  360 x 360 | round        | Standard time | Ubuntu regular |   39 |
+|  390 x 390 | round        | Standard time | Ubuntu regular |   42 |
+|  416 x 416 | round        | Standard time | Ubuntu regular |   45 |
+|  454 x 454 | round        | Standard time | Ubuntu regular |   49 |
 
 ## Build, test, deploy
 

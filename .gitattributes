@@ -14,3 +14,4 @@ resources-round-390x390/fonts/Ubuntu-Regular-42.png filter=lfs diff=lfs merge=lf
 resources-rectangle-148x205/fonts/Ubuntu-Regular-16.png filter=lfs diff=lfs merge=lfs -text
 resources-round-416x416/fonts/Ubuntu-Regular-45.png filter=lfs diff=lfs merge=lfs -text
 resources/graphics/PiechartTimeCapture.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeHero.png filter=lfs diff=lfs merge=lfs -text
