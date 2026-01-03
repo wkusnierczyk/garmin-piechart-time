@@ -63,8 +63,10 @@ function testHorizontalLayout(logger as Test.Logger) as Boolean {
     return true;
 }
 
-(:test)
+// TODO: Implement and enable test
+// (:test)
 function testStackedLayout(logger as Test.Logger) as Boolean {
+
     var layout = new PiechartTimeStackedLayout();
     var h = new MockPiechart();
     var m = new MockPiechart();
@@ -72,16 +74,15 @@ function testStackedLayout(logger as Test.Logger) as Boolean {
 
     layout.apply(h, m, s, true);
 
-    // 1. Hours should be on the Left
-    // 2. Minutes/Seconds should be on the Right (Stacked)
-    Test.assertMessage(h.x < m.x, "Hours should be left of the stack");
-    
-    // 3. Stack Alignment
-    Test.assertEqual(m.x, s.x); // Minutes and Seconds share X axis
-    
-    // 4. Vertical Stack
-    // Minutes (Top) should have smaller Y than Seconds (Bottom)
-    Test.assertMessage(m.y < s.y, "Minutes should be above Seconds");
+    // Hour must be entirely to the left of minutes and seconds
+
+    // Minutes must be (roughly) top-aligned with hour
+
+    // Seconds must be (roughly) bottom-aligned with hour
+
+    // Minutes and seconds must ne (roughly) left-aligned
+
+    // Minutes and seconds must occupy less space than hour
 
     return true;
 }

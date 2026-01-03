@@ -10,15 +10,27 @@ import Toybox.Graphics;
 (:test)
 function testThemeApplication(logger as Test.Logger) as Boolean {
     var themeName = "Test Theme";
-    var hSlice = 0xFF0000; var hOutline = 0xFFFFFF; var hUnfilled = 0x000000;
-    var mSlice = 0x00FF00; var mOutline = 0xAAAAAA; var mUnfilled = 0x111111;
-    var sSlice = 0x0000FF; var sOutline = 0x555555; var sUnfilled = 0x222222;
+    var hourSlice = 0xFF0000; var hourOutline = 0xFFFFFF; var hourUnfilled = 0x000000;
+    var minutesSlice = 0x00FF00; var minutesOutline = 0xAAAAAA; var minutesUnfilled = 0x111111;
+    var secondsSlice = 0x0000FF; var secondsOutline = 0x555555; var secondsUnfilled = 0x222222;
 
     var theme = new ColorTheme(
         themeName,
-        hSlice, hOutline, hUnfilled,
-        mSlice, mOutline, mUnfilled,
-        sSlice, sOutline, sUnfilled
+        {
+            :hourSlice => hourSlice,
+            :hourOutline => hourOutline,
+            :hourUnfilled => hourUnfilled
+        },
+        {
+            :minutesSlice => minutesSlice,
+            :minutesOutline => minutesOutline,
+            :minutesUnfilled => minutesUnfilled
+        },
+        {
+            :secondsSlice => secondsSlice,
+            :secondsOutline => secondsOutline,
+            :secondsUnfilled => secondsUnfilled
+        }
     );
 
     var mockHours = new MockPiechart();
@@ -27,17 +39,17 @@ function testThemeApplication(logger as Test.Logger) as Boolean {
 
     theme.apply(mockHours, mockMinutes, mockSeconds);
 
-    Test.assertEqual(hSlice, mockHours.lastSliceColor);
-    Test.assertEqual(hOutline, mockHours.lastOutlineColor);
-    Test.assertEqual(hUnfilled, mockHours.lastUnfilledColor);
+    Test.assertEqual(hourSlice, mockHours.lastSliceColor);
+    Test.assertEqual(hourOutline, mockHours.lastOutlineColor);
+    Test.assertEqual(hourUnfilled, mockHours.lastUnfilledColor);
 
-    Test.assertEqual(mSlice, mockMinutes.lastSliceColor);
-    Test.assertEqual(mOutline, mockMinutes.lastOutlineColor);
-    Test.assertEqual(mUnfilled, mockMinutes.lastUnfilledColor);
+    Test.assertEqual(minutesSlice, mockMinutes.lastSliceColor);
+    Test.assertEqual(minutesOutline, mockMinutes.lastOutlineColor);
+    Test.assertEqual(minutesUnfilled, mockMinutes.lastUnfilledColor);
 
-    Test.assertEqual(sSlice, mockSeconds.lastSliceColor);
-    Test.assertEqual(sOutline, mockSeconds.lastOutlineColor);
-    Test.assertEqual(sUnfilled, mockSeconds.lastUnfilledColor);
+    Test.assertEqual(secondsSlice, mockSeconds.lastSliceColor);
+    Test.assertEqual(secondsOutline, mockSeconds.lastOutlineColor);
+    Test.assertEqual(secondsUnfilled, mockSeconds.lastUnfilledColor);
 
     return true;
 }
