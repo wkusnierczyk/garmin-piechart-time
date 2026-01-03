@@ -15,3 +15,11 @@ resources-rectangle-148x205/fonts/Ubuntu-Regular-16.png filter=lfs diff=lfs merg
 resources-round-416x416/fonts/Ubuntu-Regular-45.png filter=lfs diff=lfs merge=lfs -text
 resources/graphics/PiechartTimeCapture.png filter=lfs diff=lfs merge=lfs -text
 resources/graphics/PiechartTimeHero.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeDminishing.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeItalian.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeHorizontal.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeSeconds.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeStacked.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeConcentric.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeHero-small.png filter=lfs diff=lfs merge=lfs -text
+resources/graphics/PiechartTimeStandard.png filter=lfs diff=lfs merge=lfs -text

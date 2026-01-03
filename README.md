@@ -38,13 +38,13 @@ The Piechart Time watch face supports the following features:
 
 |Screenshot|Description|
 |-|:-|
-|![]()|**Horizontal layout**<br/> Time shown as three or two piecharts besides each other.|
-|![]()|**Concentric layout**<br/> The shown as three or two concentric picharts, with hour as the smallest pie chart in the front, and minutes and seconds as larger pie charts at the back.|
-|![]()|**Stacked layout**<br/> The shown as three or two picharts forming a cluster, with hour as the largest pie chart on the left, and minutes and seconds as smaller pie charts at aligned to its right edge.|
-|![]()|**Diminishing layout**<br/> The shown as three or two picharts placed horizontally, with decreasing diameters from hour as the largest pie chart on the left, towards seconds as the smallest pie charts on the right.|
-|![]()|**Color schemes**<br/> Several color schemes are available: Monochrome, French flag colors, Italian flag colors, Red, Orange, Ocean.|
-|![]()|**Seconds**<br/> The time may be displayed as three or two pie charts, with or without seconds.|
-|![]()|**Standard time**<br/> In addition to pie charts, standard time display may be enabled to show the time in dimmed, small font at the bottom of the screen.|
+|![](resources/graphics/PiechartTimeHorizontal.png)|**Horizontal layout**<br/> Time shown as three or two piecharts besides each other.|
+|![](resources/graphics/PiechartTimeConcentric.png)|**Concentric layout**<br/> The shown as three or two concentric picharts, with hour as the smallest pie chart in the front, and minutes and seconds as larger pie charts at the back.|
+|![](resources/graphics/PiechartTimeStacked.png)|**Stacked layout**<br/> The shown as three or two picharts forming a cluster, with hour as the largest pie chart on the left, and minutes and seconds as smaller pie charts at aligned to its right edge.|
+|![](resources/graphics/PiechartTimeDminishing.png)|**Diminishing layout**<br/> The shown as three or two picharts placed horizontally, with decreasing diameters from hour as the largest pie chart on the left, towards seconds as the smallest pie charts on the right.|
+|![](resources/graphics/PiechartTimeItalian.png)|**Color themes**<br/> Several color themes are available: Monochrome, French flag colors, Italian flag colors, Red, Orange, Ocean.|
+|![](resources/graphics/PiechartTimeSeconds.png)|**Seconds**<br/> The time may be displayed as three or two pie charts, with or without seconds.|
+|![](resources/graphics/PiechartTimeStandard.png)|**Standard time**<br/> In addition to pie charts, standard time display may be enabled to show the time in dimmed, small font at the bottom of the screen.|
 
 ## Fonts
 
