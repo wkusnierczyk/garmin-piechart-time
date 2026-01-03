@@ -65,18 +65,22 @@ class PiechartTimeSettingsDelegate extends WatchUi.Menu2InputDelegate {
             Properties.setValue(STANDARD_TIME_PROPERTY, item.isEnabled());
         }
 
+        if (id.equals(SHOW_SECONDS_PROPERTY) && item instanceof WatchUi.ToggleMenuItem) {
+            Properties.setValue(SHOW_SECONDS_PROPERTY, item.isEnabled());
+        }
+
         if (id.equals(LAYOUT_PROPERTY) && item instanceof WatchUi.MenuItem) {
             var currentLayout = PropertyUtils.getPropertyElseDefault(LAYOUT_PROPERTY, LAYOUT_DEFAULT);
-            var newLayout = ((currentLayout - 1) % LAYOUT_NAMES.size()) + 2;
+            var newLayout = ((currentLayout + 1) % LAYOUT_NAMES.size());
             Properties.setValue(LAYOUT_PROPERTY, newLayout);
-            item.setSubLabel(LAYOUT_NAMES[newLayout - 1]);
+            item.setSubLabel(LAYOUT_NAMES[newLayout]);
         }
 
         if (id.equals(THEME_PROPERTY) && item instanceof WatchUi.MenuItem) {
             var currentTheme = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT);
-            var newTheme = ((currentTheme - 1) % THEME_NAMES.size()) + 2;
+            var newTheme = ((currentTheme + 1) % THEME_NAMES.size());
             Properties.setValue(THEME_PROPERTY, newTheme);
-            item.setSubLabel(THEME_NAMES[newTheme - 1]);
+            item.setSubLabel(THEME_NAMES[newTheme]);
         }
 
     }

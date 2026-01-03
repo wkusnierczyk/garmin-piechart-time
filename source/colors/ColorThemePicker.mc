@@ -186,7 +186,7 @@ class ColorThemePicker {
     }
 
     private function _updateCurrentIndex() {
-        _currentIndex = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT) - 1;
+        _currentIndex = PropertyUtils.getPropertyElseDefault(THEME_PROPERTY, THEME_DEFAULT);
     }
 
 }
