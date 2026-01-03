@@ -2,7 +2,7 @@ using Toybox.Application;
 using Toybox.WatchUi;
 
 
-class TimeApp extends Application.AppBase {
+class PiechartTimeApp extends Application.AppBase {
 
     function initialize() {
         AppBase.initialize();
@@ -15,7 +15,7 @@ class TimeApp extends Application.AppBase {
     }
 
     function getInitialView() {
-        return [ new TimeView() ];
+        return [ new PiechartTimeView() ];
     }
 
     function onSettingsChanged() as Void {
@@ -23,7 +23,7 @@ class TimeApp extends Application.AppBase {
     }
 
     function getSettingsView() {
-        return [ new TimeSettingsMenu(), new TimeSettingsDelegate() ];
+        return [ new PiechartTimeSettingsMenu(), new PiechartTimeSettingsDelegate() ];
     }
 
 }

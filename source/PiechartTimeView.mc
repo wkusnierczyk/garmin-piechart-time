@@ -5,17 +5,17 @@ using Toybox.WatchUi;
 import Toybox.Lang;
 
 
-class TimeView extends WatchUi.WatchFace {
+class PiechartTimeView extends WatchUi.WatchFace {
+
+    private var _piechartTime as PiechartTime;
 
     function initialize() {
         WatchFace.initialize();
+        _piechartTime = new PiechartTime();
     }
 
     function onLayout(dc) {
         setLayout(Rez.Layouts.WatchFace(dc));
-    }
-
-    function onShow() {
     }
 
     function onUpdate(dc) {
@@ -31,6 +31,12 @@ class TimeView extends WatchUi.WatchFace {
 
         _drawStandardTime(null, hour, minutes, seconds);
         View.onUpdate(dc);
+
+        var showSeconds = PropertyUtils.getPropertyElseDefault(SHOW_SECONDS_PROPERTY, SHOW_SECONDS_MODE_DEFAULT);
+
+        _piechartTime
+            .showSeconds(showSeconds)
+            .draw(dc);
 
     }
 

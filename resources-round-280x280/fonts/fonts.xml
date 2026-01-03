@@ -1,10 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
-
     <fonts>
         <font id="StandardTimeFont" filename="Ubuntu-Regular-30.fnt" antialias="true" />
     </fonts>
-
-    <jsonData id="FontCharsets" filename="charsets.json"/>
-    <jsonData id="ScreenResolutions" filename="resolutions.json" />
-
 </resources>

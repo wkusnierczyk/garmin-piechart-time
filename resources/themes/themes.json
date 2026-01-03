@@ -1,0 +1,125 @@
+{
+    "default": "monochrome",
+    "themes": [
+        {
+            "colors": {
+                "hours": {
+                    "outline": "FFFFFF",
+                    "slice": "FFFFFF",
+                    "unfilled": "000000"
+                },
+                "minutes": {
+                    "outline": "AAAAAA",
+                    "slice": "AAAAAA",
+                    "unfilled": "000000"
+                },
+                "seconds": {
+                    "outline": "555555",
+                    "slice": "555555",
+                    "unfilled": "000000"
+                }
+            },
+            "name": "monochrome"
+        },
+        {
+            "colors": {
+                "hours": {
+                    "outline": "0000D5",
+                    "slice": "0000D5",
+                    "unfilled": "000000"
+                },
+                "minutes": {
+                    "outline": "FFFFFF",
+                    "slice": "FFFFFF",
+                    "unfilled": "000000"
+                },
+                "seconds": {
+                    "outline": "ED2939",
+                    "slice": "ED2939",
+                    "unfilled": "000000"
+                }
+            },
+            "name": "french"
+        },
+        {
+            "colors": {
+                "hours": {
+                    "outline": "008C45",
+                    "slice": "008C45",
+                    "unfilled": "000000"
+                },
+                "minutes": {
+                    "outline": "F4F9FF",
+                    "slice": "F4F9FF",
+                    "unfilled": "000000"
+                },
+                "seconds": {
+                    "outline": "CD212A",
+                    "slice": "CD212A",
+                    "unfilled": "000000"
+                }
+            },
+            "name": "italian"
+        },
+        {
+            "colors": {
+                "hours": {
+                    "outline": "AA0000",
+                    "slice": "FFFFFF",
+                    "unfilled": "000000"
+                },
+                "minutes": {
+                    "outline": "FFFFFF",
+                    "slice": "FF0000",
+                    "unfilled": "000000"
+                },
+                "seconds": {
+                    "outline": "FF0000",
+                    "slice": "AA0000",
+                    "unfilled": "000000"
+                }
+            },
+            "name": "red"
+        },
+        {
+            "colors": {
+                "hours": {
+                    "outline": "AAAAAA",
+                    "slice": "FF5500",
+                    "unfilled": "000000"
+                },
+                "minutes": {
+                    "outline": "AAAAAA",
+                    "slice": "FF5500",
+                    "unfilled": "000000"
+                },
+                "seconds": {
+                    "outline": "AAAAAA",
+                    "slice": "FF5500",
+                    "unfilled": "000000"
+                }
+            },
+            "name": "orange"
+        },
+        {
+            "colors": {
+                "hours": {
+                    "outline": "000055",
+                    "slice": "0000FF",
+                    "unfilled": "000000"
+                },
+                "minutes": {
+                    "outline": "000088",
+                    "slice": "0088FF",
+                    "unfilled":"000000"
+                },
+                "seconds": {
+                    "outline": "005555",
+                    "slice": "00FFFF",
+                    "unfilled": "000000"
+                }
+            },
+            "name": "ocean"
+        }
+    ]
+}
