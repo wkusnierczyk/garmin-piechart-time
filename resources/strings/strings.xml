@@ -2,7 +2,7 @@
     xsi:noNamespaceSchemaLocation="http://developer.garmin.com/downloads/connect-iq/resources.xsd">
 
     <string id="AppName">{blank:ucname}Time</string>
-    <string id="Time">{blank:ucname} Time</string>
+    <string id="Time">Piechart Time</string>
 
     <string id="StandardTimeMenuTitle">Show Standard Time</string>
 
