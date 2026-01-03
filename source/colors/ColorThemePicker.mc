@@ -30,11 +30,11 @@ class ColorThemePicker {
     static const DEFAULT_HOUR_SLICE_COLOR = Graphics.COLOR_LT_GRAY;
     static const DEFAULT_HOUR_OUTLINE_COLOR = Graphics.COLOR_WHITE;
     
-    static const DEFAULT_MINUTE_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
-    static const DEFAULT_MINUTE_OUTLINE_COLOR = Graphics.COLOR_LT_GRAY;
+    static const DEFAULT_MINUTES_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
+    static const DEFAULT_MINUTES_OUTLINE_COLOR = Graphics.COLOR_LT_GRAY;
     
-    static const DEFAULT_SECOND_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
-    static const DEFAULT_SECOND_OUTLINE_COLOR = Graphics.COLOR_DK_GRAY;
+    static const DEFAULT_SECONDS_SLICE_COLOR = Graphics.COLOR_DK_GRAY;
+    static const DEFAULT_SECONDS_OUTLINE_COLOR = Graphics.COLOR_DK_GRAY;
     
     static const DEFAULT_UNFILLED_COLOR = Graphics.COLOR_BLACK; // Default background
 
@@ -111,19 +111,24 @@ class ColorThemePicker {
                 var theme = new ColorTheme(
                     name,
                     // Hours
-                    parseColor(hourColors[SLICE_KEY]),
-                    parseColor(hourColors[OUTLINE_KEY]),
-                    parseOptionalColor(hourColors, UNFILLED_KEY),
+                    {
+                        :hourSlice => parseColor(hourColors[SLICE_KEY]),
+                        :hourOutline => parseColor(hourColors[OUTLINE_KEY]),
+                        :hourUnfilled => parseOptionalColor(hourColors, UNFILLED_KEY),
+                    },
                     
                     // Minutes
-                    parseColor(minutesColors[SLICE_KEY]),
-                    parseColor(minutesColors[OUTLINE_KEY]),
-                    parseOptionalColor(minutesColors, UNFILLED_KEY),
-                    
+                    {
+                        :minutesSlice => parseColor(minutesColors[SLICE_KEY]),
+                        :minutesOutline => parseColor(minutesColors[OUTLINE_KEY]),
+                        :minutesUnfilled => parseColor(minutesColors[UNFILLED_KEY]),
+                    },
                     // Seconds
-                    parseColor(secondsColors[SLICE_KEY]),
-                    parseColor(secondsColors[OUTLINE_KEY]),
-                    parseOptionalColor(secondsColors, UNFILLED_KEY)
+                    {
+                        :secondsSlice => parseColor(secondsColors[SLICE_KEY]),
+                        :secondsOutline => parseColor(secondsColors[OUTLINE_KEY]),
+                        :secondsUnfilled => parseColor(secondsColors[UNFILLED_KEY]),
+                    }
                 );
                 _themes.add(theme);
             }
@@ -146,9 +151,21 @@ class ColorThemePicker {
     private function createFallbackTheme() as ColorTheme {
         return new ColorTheme(
             DEFAULT_THEME_NAME,
-            DEFAULT_HOUR_SLICE_COLOR, DEFAULT_HOUR_OUTLINE_COLOR, DEFAULT_UNFILLED_COLOR,
-            DEFAULT_MINUTE_SLICE_COLOR, DEFAULT_MINUTE_OUTLINE_COLOR, DEFAULT_UNFILLED_COLOR,
-            DEFAULT_SECOND_SLICE_COLOR, DEFAULT_SECOND_OUTLINE_COLOR, DEFAULT_UNFILLED_COLOR
+            {
+                :hourSlice => DEFAULT_HOUR_SLICE_COLOR,
+                :hourOutline => DEFAULT_HOUR_OUTLINE_COLOR,
+                :hourUnfilled => DEFAULT_UNFILLED_COLOR,
+            },
+            {
+                :minutesSlice => DEFAULT_MINUTES_SLICE_COLOR,
+                :minutesOutline => DEFAULT_MINUTES_OUTLINE_COLOR,
+                :minutesUnfilled => DEFAULT_UNFILLED_COLOR,
+            },
+            {
+                :secondsSlice => DEFAULT_SECONDS_SLICE_COLOR,
+                :secondsOutline => DEFAULT_SECONDS_OUTLINE_COLOR,
+                :secondsUnfilled => DEFAULT_UNFILLED_COLOR,
+            }
         );
     }
     
